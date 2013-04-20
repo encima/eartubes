@@ -47,6 +47,14 @@ def movie_search():
 @app.route('/tk', methods=['GET'])
 def tastekid_search():
     pass
+@app.route('/lastfm_auth/')
+def lastfm_auth():
+    return "auth string (from api)"
+
+@app.route('/lastfm_callback')
+def lastfm_callback():
+    # call lastfm method for callback stuff
+    return redirect(url_for('index'))
 
 @app.route('/register/', methods=['POST'])
 def register():
@@ -66,7 +74,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
+    session.pop('id', None)
     flash('You were logged out')
     return redirect(url_for('index'))
 

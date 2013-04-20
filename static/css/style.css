@@ -62,14 +62,15 @@ header{
 }
 
 #beam .indent{
+    color:white;
     margin-left:30px;
+    margin-right:10px;
 }
 
 #beam p{
     font-family:'Helvetica Neue', 'Helvetica';
     text-shadow:1px 1px 1px #222;
     font-weight:lighter;
-    color:white;
     font-size:15px;
     margin-bottom:5px;
 }
@@ -87,6 +88,9 @@ header{
     width:300px;
     float:right;
     clear:both;
+}
+.account p{
+    color:white;
 }
 
 .account .link{
@@ -126,3 +130,28 @@ header{
 }
 .account button:hover{background:#bbb; color:white;}
 
+#login-error{
+    color:red;
+}
+
+#registration-error{
+    color:red;
+}
+
+/* DASHBOARD STUFF */
+#beam .column{
+    width:49%;
+    float:left;
+    height:350px;
+}
+#beam .column:first-child{
+    border-right:1px solid #bbb;
+}
+
+
+#lastfm-connect{
+    display: block;
+    position:relative;
+    margin:20px auto;
+    width:150px;
+}

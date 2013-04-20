@@ -10,8 +10,10 @@ function login(){
 				success : function(data){
 				    console.log(data);
                     if(data['success'] == true){
+                        window.location="/";
                     }
                     if(data['success'] == false){
+                        $("#login-error").html(data['error']);
                         $("#login-error").fadeIn(400);
                     }
                 },
@@ -38,6 +40,7 @@ function register(){
                         $("#registration-success").fadeIn(400);
                     }
                     if(data['success'] == false){
+                        $("#registration-error").html(data['error']);
                         $("#registration-error").fadeIn(400);
                     }
 				},
