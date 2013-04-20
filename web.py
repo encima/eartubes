@@ -1,16 +1,15 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
 import sqlite3
-from api.imdb_api import IMDBApi as imdb
-from api.tastekid_api import TastekidApi as taste
-from api.lastfm_handler import LastFMHandler as lastfm
+from api.imdb_api import IMDBApi
+from api.tastekid_api import TastekidApi
+from api.lastfm_handler import LastFMHandler 
 
 DEBUG = True
 DATABASE = 'data.db'
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
-
 
 # create our little application :)
 app = Flask(__name__)
@@ -35,7 +34,7 @@ def index():
         return render_template('login.html')
 
 #partial search for movies from sqlite
-@app.route('/ps', methods=['GET'])
+@app.route('/api/ps', methods=['GET'])
 def movie_search():
     term = request.args.get('q')
     cur = g.db.execute("SELECT id, title FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
@@ -44,9 +43,12 @@ def movie_search():
     print entries
     return json.dumps(entries)
 
-@app.route('/tk', methods=['GET'])
+@app.route('/api/tk', methods=['GET'])
 def tastekid_search():
-    pass
+    term = request.args.get('q')
+    tk = TastekidApi()
+    return tk.get_similar_movies_from_artists(term)
+
 @app.route('/lastfm_auth/')
 def lastfm_auth():
     return "auth string (from api)"

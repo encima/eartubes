@@ -19,7 +19,6 @@ class IMDBApi:
     for param in params:
       paramString += "&" + param + "=" + str(params[param])
     request = self.API_ROOT + "" + paramString
-    print "REQUEST:" + request
     response = urllib2.urlopen(request).read()
     return json.dumps(response)
 
