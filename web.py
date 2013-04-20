@@ -50,7 +50,7 @@ def movie_search():
 @app.route('/api/tk', methods=['POST'])
 def tastekid_search():
     term = request.form['q']
-    term = re.escape(term)1
+    term = re.escape(term)
     response = json.loads(tk.get_similar_movies_from_artists(term))
     print response
     return json.dumps(response)
