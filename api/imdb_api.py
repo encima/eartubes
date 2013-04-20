@@ -21,7 +21,7 @@ class IMDBApi:
     request = self.API_ROOT + "" + paramString
     print "REQUEST:" + request
     response = urllib2.urlopen(request).read()
-    return json.dumps(response)    
+    return json.dumps(response)
 
-ia = IMDBApi()
-print ia.get_info('vanilla', None, 1)
+#ia = IMDBApi()
+#print ia.get_info('vanilla', None, 1)

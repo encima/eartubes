@@ -33,5 +33,5 @@ class tastekid_api:
     response = urllib2.urlopen(request).read()
     return json.dumps(response)
 
-t = tastekid_api('hans+zimmer')
-print t.get_similar_movies_from_artists('hans zimmer, hank williams')
+#t = tastekid_api('hans+zimmer')
+#print t.get_similar_movies_from_artists('hans zimmer, hank williams')
