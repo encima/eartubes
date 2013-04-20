@@ -12,9 +12,16 @@ header{
     background-repeat:no-repeat;
     background-position:50px 10px;
     background-size:auto 100px;
-    height:200px;    
+    height:150px;    
     position:relative;
     clear:both;
+}
+
+#promo{
+    width:100%;
+    height:300px;
+    background:rgba(0,0,0,0.5);
+    padding-top:20px;
 }
 
 #main{
@@ -24,4 +31,87 @@ header{
     border:none;
 }
 
+/* HEADER STUFF */
+#title{
+    margin-left:200px;
+    padding-top:50px;
+    font-size:30px;
+    color:#bbb;
+    text-shadow:2px 2px 4px white;
+    font-family:'Helvetica Neue', 'Helvetica';
+}
+
+/* PROMO STUFF */
+#promo h1{
+    margin-left:30px;
+    color:white;
+    font-family:'Helvetica Neue', 'Helvetica';
+    font-weight:lighter;
+    font-size:30px;
+    margin-top:5px;;
+    margin-bottom:10px;
+}
+
+#promo h2{
+    color:white;
+    font-family:'Helvetica Neue', 'Helvetica';
+    font-weight:lighter;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+
+#promo p{
+    margin-left:30px;
+    font-family:'Helvetica Neue', 'Helvetica';
+    font-weight:lighter;
+    color:white;
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+
+#account-holder{
+    width:320px;
+    position:relative;
+    float:right;
+    margin-right:30px;
+}
+    
+.account{
+    position:absolute;
+    width:300px;
+    float:right;
+    clear:both;
+}
+#registration-form{
+    display:none;
+}
+.account input{
+    width:100%;
+    display:block;
+    height:30px;
+    font-size:20px;
+    padding:4px;
+    margin:10px auto;
+    clear:both;
+    border:1px solid #ccc;
+    border-radius:5px;
+    background:white;
+    font-family:'Helvetica Neue', 'Helvetica';
+}
+
+.account button{
+    width:100%;
+    height:30px;
+    font-size:15px;
+    clear:both;
+    padding:2px;
+    margin:10px auto;
+    border:1px solid #ccc;
+    border-radius:5px;
+    background:white;
+    font-family:'Helvetica Neue', 'Helvetica';
+}
+.account button:hover{background:#bbb; color:white;}
 
