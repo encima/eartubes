@@ -41,6 +41,15 @@ def movie_search():
     print entries
     return json.dumps(entries)
 
+@app.route('/lastfm_auth/')
+def lastfm_auth():
+    return "auth string (from api)"
+
+@app.route('/lastfm_callback')
+def lastfm_callback();
+    # call lastfm method for callback stuff
+    return redirect(url_for('index'))
+
 @app.route('/register/', methods=['POST'])
 def register():
     error = None
