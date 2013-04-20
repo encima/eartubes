@@ -2,6 +2,10 @@ html, body {
     margin: 0px;
 }
 
+*{
+    font-family:'Helvetica Neue', 'Helvetica', 'Verdana';
+}
+
 body{
     background:url('/static/media/background.png');
 }
@@ -35,12 +39,25 @@ header{
 
 /* HEADER STUFF */
 #title{
+    float:left;
     margin-left:200px;
     padding-top:50px;
     font-size:30px;
     color:#bbb;
     text-shadow:2px 2px 4px white;
     font-family:'Helvetica Neue', 'Helvetica';
+}
+#logout{
+    display:block;
+    width:40px;
+    height:40px;
+    float:right;
+    padding-top:50px;
+    margin-right:20px;
+}
+#logout img{
+    opacity:0.3;
+    width:100%;
 }
 
 /* BEAM STUFF */

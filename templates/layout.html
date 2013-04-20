@@ -6,6 +6,7 @@
 <body>
     <header>
         <div id="title">eartub.es</div>
+        <a href="/logout/" id="logout"><img src="/static/media/logout.png" /></a>
         {% block header %}
     
         {% endblock %}
@@ -26,6 +27,15 @@
 <script type="text/javascript" src="/static/js/easing.js"></script>
 <script type="text/javascript" src="/static/js/color.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
+<script type="text/javascript">
+$("#logout img").mouseenter(function(){
+    $(this).stop().animate({opacity:'0.6'}, 300);
+});
+$("#logout img").mouseleave(function(){
+    $(this).stop().animate({opacity:'0.3'}, 300);
+});
+
+</script>
 {% block scripts %}
 
 {% endblock %}
