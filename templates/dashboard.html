@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 
-
 {% block beam %}
 
 <div id="beam">
@@ -13,6 +12,12 @@
     </div>
     <div class="column">
         <h1 class="indent">Or try searching a film you like</h1>
+        <p class="indent">Enter the name of a movie, select it from the list, and we'll try and suggest similar ones by soundtrack.</p>
+        <input type="text" placeholder="Movie name" id="movie_name" />
+
+        <ul id="movie_name_results" style="opacity:0.0;">
+        </ul>
+        <div style="clear:both;"></div>
     </div>
 </div>
 
@@ -23,4 +28,69 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="text/javascript">
+var requesting = false;
+
+function loadListeners(){
+    $("#movie_name_results li").click(function(){
+        $("#movie_name").val($(this).html());
+         $("#movie_name_results").html('');
+         $("#movie_name_results").stop().animate({opacity: '0.0'}, 400);
+         var winHeight = $(window).height();
+         var topHeight = winHeight-350-20; // - height of beam - padding of beam   
+         $("#beam").stop().animate({top:topHeight+'px', height:'350px'},600, 'easeOutQuint');
+    });
+}
+
+function getMoviesByName(name){
+    requesting = true;
+    $.ajax({
+        type : 'GET',
+        url : '/api/ps',
+        dataType : 'json',
+        data : {
+            q: name
+        },
+        success : function(data){
+            $("#movie_name_results").html('');
+            if($("#movie_name").val().length <=2){
+                 $("#movie_name_results").stop().animate({opacity: '0.0'},300);   
+                 $("#beam").stop().animate({height: "350px"}, 300);
+ 
+                requesting = false;
+                return;
+            }
+            $("#movie_name_results").stop().animate({opacity: '1.0'},400);
+            for(var i = 0; i < data.length; i++){
+                var item = "";
+                item = '<li>'+data[i]['title']
+                if(data[i]['year'] != "-1"){
+                    item = item + ' ('+data[i]['year']+')'
+                }
+                item = item + '</li>';
+                $("#movie_name_results").append(item);
+                if(i > 20){i = data.length;}
+                loadListeners();
+                var reqHeight = $("#movie_name_results").height() + 200;
+                $("#beam").stop().animate({height: reqHeight+"px"}, 300);
+            }
+            requesting = false;
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown){
+            console.log("error");
+            requesting = false;
+        }
+    });
+
+}
+
+$("#movie_name").keyup(function(){
+    var request = $("#movie_name").val();
+    if(request.length > 2 && requesting == false){
+        $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
+        getMoviesByName(request);
+    }
+});
+
+</script>
 {% endblock %}
