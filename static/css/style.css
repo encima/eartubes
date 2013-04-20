@@ -1,42 +1,27 @@
-body, html {
-    /*font-family: 'Jacques Francois', serif;*/
-    font-family: 'Cantarell', sans-serif;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+html, body {
+    margin: 0px;
 }
 
-header {
-    margin: 0 auto;
-    width: 80%;
+body{
+    background:url('/static/media/background.png');
 }
 
-/*#sidebar {
-    float: left;
-    width: 20%;
-    min-height: 100%;
-    background-color: #66CCFF;
-}*/
-
-#content {
-    margin: 0 auto;
-    width: 80%;
-    margin-bottom: 10%;
-    min-height: 40%;
-    border: 1px solid #ccc;
-    background-color: #f3f3f3;
+header{
+    width:100%;
+    background:url('/static/media/logo.png') rgba(250,250,250,0.6);
+    background-repeat:no-repeat;
+    background-position:50px 10px;
+    background-size:auto 100px;
+    height:200px;    
+    position:relative;
+    clear:both;
 }
 
-h1, h4 {
-    color: #403501;
-    padding-left: 20px;
+#main{
+    background:rgba(250,250,250,0.5);
+    width:80%;
+    margin:10px auto;
+    border:none;
 }
 
-ul {
-  list-style-type: lower-roman;
-  padding: 40px;
-}
 
-li {
-  padding-bottom: 15px;
-}

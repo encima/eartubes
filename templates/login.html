@@ -1,20 +1,23 @@
-{% extends layout.html %}
+{% extends "layout.html" %}
+
+
+{% block promo %}
+
+
+
+{% endblock %}
 
 {% block main %}
-  <form method="post" action="/login/">
-    <p>
-      <label for="login">Email:</label>
-      <input type="text" name="login" id="login" value="type login here">
-    </p>
+<div id="login-form" 
+    <input type="text" name="email" id="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+    <input type="submit">Login</button>
+</div>
 
-    <p>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" value="4815162342">
-    </p>
+<div id="registration-form">
+    <input type="text" id="email" placeholder="Email">
+    <input type="password" id="password1" placeholder="Password">
+    <input type="password" id="password2" placeholder="Confirm password">
+</div>
 
-    <p class="login-submit">
-      <button type="submit" class="login-button">Login</button>
-    </p>
-  </form>
-  
 {% endblock %}

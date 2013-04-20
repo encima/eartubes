@@ -1,3 +1,5 @@
+.DS_StoreE
+
 *.py[cod]
 
 # C extensions
