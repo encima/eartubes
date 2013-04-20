@@ -1,6 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
-import urllib2
+import urllib
 import sqlite3
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
@@ -36,25 +36,25 @@ def index():
         return render_template('login.html')
 
 #partial search for movies from sqlite
-@app.route('/api/ps', methods=['GET'])
+@app.route('/api/ps', methods=['POST'])
 def movie_search():
-    term = request.args.get('q')
+    term = request.form['q']
     cur = g.db.execute("SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
     #convert sql result to json and return
     entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
     print entries
     return json.dumps(entries)
 
-@app.route('/api/tk', methods=['GET'])
+@app.route('/api/tk', methods=['POST'])
 def tastekid_search():
-    term = request.args.get('q')
+    term = request.form['q']
     response = json.loads(tk.get_similar_movies_from_artists(term))
     print response
     return json.dumps(response)
 
-@app.route('/api/imdb', methods=['GET'])
+@app.route('/api/imdb', methods=['POST'])
 def imdb_search():
-    term = request.args.get('q')
+    term = request.form['q']
     term = urllib.url2pathname(term)
     print term
     response = json.loads(ia.get_info(movie=term))
