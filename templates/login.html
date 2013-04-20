@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
 
-{% block promo %}
+{% block beam %}
 
-<div id="promo">
+<div id="beam">
        <div id="account-holder">
                 <div id="login-form" class="account"> 
                     <h2>Login</h2>
@@ -22,9 +22,9 @@
                     <p>Already have an account? Please <span class="link" id="show-login">click here</span>.</p>
                 </div>
         </div>
-    <h1>Welcome to eartubes</h1>
-    <p>Let us get in your musics and tell you about films that we think you'll like.</p>
-    <p>Make an account or login to get started.</p>
+    <h1 class="indent">Welcome to eartubes</h1>
+    <p class="indent">Let us get in your musics and tell you about films that we think you'll like.</p>
+    <p class="indent">Make an account or login to get started.</p>
  
 </div>
 
@@ -32,4 +32,33 @@
 
 {% block main %}
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+function loadListeners(){
+    $("#show-register").click(function(){
+        showRegister();
+    });
+
+    $("#show-login").click(function(){
+        showLogin();
+    });
+}
+function showRegister(){
+    $("#login-form").fadeOut(300, function(){
+        $("#registration-form").fadeIn(500);
+    });
+    loadListeners();
+}
+function showLogin(){
+    $("#registration-form").fadeOut(300, function(){
+        $("#login-form").fadeIn(500);
+    });
+    loadListeners();
+}
+$(document).ready(function(){
+   loadListeners(); 
+});
+</script>
 {% endblock %}

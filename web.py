@@ -39,7 +39,7 @@ def register():
 @app.route('/login/', methods=['POST'])
 def login():
     error = None
-    if request.form['username'] != USERNAME:
+    if request.form['email'] != USERNAME:
         error = 'Invalid username'
     elif request.form['password'] != PASSWORD:
         error = 'Invalid password'

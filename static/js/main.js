@@ -1,7 +1,5 @@
 function login(){
-
-
-$.ajax({
+    $.ajax({
 				type : 'POST',
 				url : '/login/',
 				dataType : 'json',
@@ -10,47 +8,50 @@ $.ajax({
 					password: $("#login-password").val()
 				},
 				success : function(data){
-					$("#content").html(data);
-					$("#loading").fadeOut(200, function(){
-						$("#content").fadeIn(600, function(){});
-					});
-					
-					$("html, body").animate({ scrollTop: 0 }, "fast");
-					//analytics();
-					reloadEffects();
-				},
+				    console.log(data);
+                    if(data['success'] == true){
+                    }
+                    if(data['success'] == false){
+                        $("#login-error").fadeIn(400);
+                    }
+                },
 				error : function(XMLHttpRequest, textStatus, errorThrown){
-					timer = setTimeout(function(){loadPage(requestedPage)}, 5000);
 					console.log("error");
 				}
 			});
-		}
+}
 		
 		
 function register(){
-$.ajax({
+    $.ajax({
 				type : 'POST',
-				url : '/login/',
+				url : '/register/',
 				dataType : 'json',
 				data : {
 					email: $("#register-email").val(),
-					password1: $("#register-password1").val()
+					password1: $("#register-password1").val(),
 					password2: $("#register-password2").val()
 
 				},
 				success : function(data){
-					
+					if(data['success'] == true){
+                        $("#registration-success").fadeIn(400);
+                    }
+                    if(data['success'] == false){
+                        $("#registration-error").fadeIn(400);
+                    }
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown){
-					timer = setTimeout(function(){loadPage(requestedPage)}, 5000);
 					console.log("error");
 				}
 			});
-		}
+}
 		
-$("#Login").click(function(event){
+$("#login").click(function(event){
 		event.stopImmediatePropagation();
 		login();
+});
 $("#register").click(function(event){
 		event.stopImmediatePropagation();
 		register();
+});
