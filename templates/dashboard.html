@@ -9,7 +9,6 @@
         <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
         <p class="indent">Click the button below to redirect you to Last.fm to connect your eartub.es account to your Last.fm account.</p>
         <a href="/lastfm_auth"><img src="/static/media/lastfm.gif" id="lastfm-connect" /></a>
-        <p class="indent">If you don't want to do this at this time, then have a go with the movie searcher to the right.</p>
     </div>
     <div class="column">
         <h1 class="indent">Or try searching a film you like</h1>
@@ -49,8 +48,8 @@ function loadListeners(){
          $("#movie_name_results").html('');
          $("#movie_name_results").stop().animate({opacity: '0.0'}, 400);
          var winHeight = $(window).height();
-         var topHeight = winHeight-350-20; // - height of beam - padding of beam   
-         $("#beam").stop().animate({top:topHeight+'px', height:'350px'},600, 'easeOutQuint');
+         var topHeight = winHeight-200; // - height of beam - padding of beam   
+         $("#beam").stop().animate({top:topHeight+'px', height:'200px'},600, 'easeOutQuint');
         getMovieInfo(movieName);
     });
 }
@@ -102,7 +101,7 @@ function getMoviesByName(name){
                 }
                 item = item + '</li>';
                 $("#movie_name_results").append(item);
-                if(i > 20){i = data.length;}
+                if(i > 200){i = data.length;}
                 loadListeners();
                 var reqHeight = $("#movie_name_results").height() + 200;
                 $("#beam").stop().animate({height: reqHeight+"px"}, 300);
@@ -121,7 +120,12 @@ $("#movie_name").keyup(function(event){
     event.stopImmediatePropagation();
     var request = $("#movie_name").val();
     if(request.length > 2 && requesting == false){
-        $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
+        if($("#beam").height() < 300){
+            $("#beam").stop().animate({top:'150px', height:'350px'},600, 'easeOutQuint');
+        }
+        else{
+            $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
+        }
         $("#results").stop().fadeOut(400);
         getMoviesByName(request);
     }
