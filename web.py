@@ -1,5 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
+import sqlite3
 
 DEBUG = True
 DATABASE = 'data/data.db'
@@ -33,7 +34,7 @@ def index():
 @app.route('/register/', methods=['POST'])
 def register():
     error = None
-    
+
 
 @app.route('/login/', methods=['POST'])
 def login():
