@@ -82,7 +82,7 @@ def login():
         return json.dumps({'success':True})
     return json.dumps({'success':False, 'error':error})
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     session.pop('id', None)
     flash('You were logged out')
