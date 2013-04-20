@@ -46,7 +46,7 @@ def movie_search():
 
 @app.route('/tk', methods=['GET'])
 def tastekid_search():
-
+    pass
 
 @app.route('/register/', methods=['POST'])
 def register():
