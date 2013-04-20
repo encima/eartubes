@@ -3,6 +3,7 @@
 {% block beam %}
 
 <div id="beam">
+
     <div class="column">
         <h1 class="indent">Connect your Last.fm account</h1>
         <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
@@ -11,6 +12,8 @@
         <p class="indent">If you don't want to do this at this time, then have a go with the movie searcher to the right.</p>
     </div>
     <div class="column">
+
+<button id="clicker" >,click</button>
         <h1 class="indent">Or try searching a film you like</h1>
         <p class="indent">Enter the name of a movie, select it from the list, and we'll try and suggest similar ones by soundtrack.</p>
         <input type="text" placeholder="Movie name" id="movie_name" />
@@ -20,6 +23,16 @@
         <div style="clear:both;"></div>
     </div>
 </div>
+
+    <div id="results">
+        <div id="query">
+            <h2>Movies with soundtracks similar to</h2>
+            <p id="query-title"></p>
+            <div id="query-poster"></div>
+        </div>
+
+    </div>
+
 
 {% endblock %}
 
@@ -32,13 +45,36 @@
 var requesting = false;
 
 function loadListeners(){
-    $("#movie_name_results li").click(function(){
-        $("#movie_name").val($(this).html());
+    $("#movie_name_results li").click(function(event){
+        event.stopImmediatePropagation();
+        var movieName = $(this).attr("rel");
+        $("#movie_name").val(movieName)
          $("#movie_name_results").html('');
          $("#movie_name_results").stop().animate({opacity: '0.0'}, 400);
          var winHeight = $(window).height();
          var topHeight = winHeight-350-20; // - height of beam - padding of beam   
          $("#beam").stop().animate({top:topHeight+'px', height:'350px'},600, 'easeOutQuint');
+        getMovieInfo(movieName);
+    });
+}
+
+function getMovieInfo(name){
+    $.ajax({
+        type : 'GET',
+        url : '/api/imdb',
+        dataType : 'json',
+        data : {
+            q: name
+        },
+        success : function(data){
+            console.log(data);
+            $("#query-title").html(data[0]['title']);
+            $("#query-poster").html('<img src="'+data[0]['poster']+'" />');
+            $("#results").fadeIn(500);
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown){
+            console.log("error: "+textStatus);
+        }
     });
 }
 
@@ -63,7 +99,7 @@ function getMoviesByName(name){
             $("#movie_name_results").stop().animate({opacity: '1.0'},400);
             for(var i = 0; i < data.length; i++){
                 var item = "";
-                item = '<li>'+data[i]['title']
+                item = '<li rel="'+data[i]['title']+'">'+data[i]['title']
                 if(data[i]['year'] != "-1"){
                     item = item + ' ('+data[i]['year']+')'
                 }
@@ -84,13 +120,19 @@ function getMoviesByName(name){
 
 }
 
-$("#movie_name").keyup(function(){
+$("#movie_name").keyup(function(event){
+    event.stopImmediatePropagation();
     var request = $("#movie_name").val();
     if(request.length > 2 && requesting == false){
         $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
         getMoviesByName(request);
     }
 });
+
+$("#clicker").click(function(event){
+        event.stopImmediatePropagation();
+        getMovieInfo("Harry Potter and the Philosopher's Stone");
+    });
 
 </script>
 {% endblock %}
