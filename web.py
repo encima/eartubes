@@ -46,7 +46,7 @@ def lastfm_auth():
     return "auth string (from api)"
 
 @app.route('/lastfm_callback')
-def lastfm_callback();
+def lastfm_callback():
     # call lastfm method for callback stuff
     return redirect(url_for('index'))
 
