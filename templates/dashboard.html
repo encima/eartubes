@@ -23,7 +23,7 @@
 
     <div id="results">
         <div id="query">
-            <p>Movies with soundtracks similar to <strong><span id="query-title"></span></strong></p>
+            <p>Movies with soundtracks similar to "<strong><span id="query-title"></span>"</strong></p>
             <div id="query-poster"></div>
         </div>
 
@@ -65,12 +65,16 @@ function getMovieInfo(name){
         success : function(data){
             console.log(data);
             $("#query-title").html(data[0]['title']);
-            $("#query-poster").html('<img src="'+data[0]['poster']+'" />');
+            if(data[0]['poster'] != null){
+                $("#query-poster").html('<img src="'+data[0]['poster']+'" />');
+            }
+            else{$("#query-poster").html('<p class="error">Sorry, we couldn\'t find an image for this movie.</p>');}
             $("#results").fadeIn(500);
             var spaceLeft = $(window).height() - $("header").height() - $("#beam").height()-80;
-            $("#results").animate({height: spaceLeft+'px'},300);
-            var spaceForImage = $("#query").height() - $("#query-title").height();
-            $("#query-poster img").css({'height':spaceForImage+"px"});
+            $("#results").animate({height: spaceLeft+'px'},300, function(){
+                var spaceForImage = $("#query").height() - $("#query-title").height()-50;
+                $("#query-poster img").animate({height:spaceForImage+"px"}, 300);
+            });
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
             console.log("error: "+textStatus);

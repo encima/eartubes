@@ -220,18 +220,28 @@ header{
 }
 
 #results #query{
+    position:relative;
+    height:100%;
     width:300px;
     margin-left:15px;
-    padding-right:10px;
-    border-right:1px solid #ddd;
+    padding:10px;
+    background:rgba(0,0,0,0.02);
+    border-radius:6px;
+    box-shadow:0px 0px 5px gray;
 }
 
 #results #query-poster{
+    position:relative;
     width:300px;
     max-height:100%;
-    overflow:hidden;
 }
 #results #query-poster img{
     height:100%;
+    display: block;
+    position:relative;
+    margin:0px auto;
 }
 
+.error{
+    color:red;
+}
