@@ -1,5 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
+import urllib2
 import sqlite3
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
@@ -54,6 +55,8 @@ def tastekid_search():
 @app.route('/api/imdb', methods=['GET'])
 def imdb_search():
     term = request.args.get('q')
+    term = urllib.url2pathname(term)
+    print term
     response = json.loads(ia.get_info(movie=term))
     print response
     if len(response) is 1:
