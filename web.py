@@ -57,8 +57,12 @@ def imdb_search():
     response = json.loads(ia.get_info(movie=term))
     print response
     if len(response) is 1:
-        print response[0]['poster']
-        print response[0]['imdb_id']
+        if 'poster' in response[0].keys():
+            poster =  response[0]['poster']
+        title =  response[0]['title']
+        imdb_id = response[0]['imdb_id']
+        cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + title  + "%');")
+
         return json.dumps(response)
     else:
         return "{Error: No Results}"
