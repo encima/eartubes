@@ -49,7 +49,7 @@ def tastekid_search():
     term = request.args.get('q')
     response = json.loads(tk.get_similar_movies_from_artists(term))
     print response
-    return str(response)
+    return json.dumps(response)
 
 @app.route('/api/imdb', methods=['GET'])
 def imdb_search():
@@ -59,7 +59,7 @@ def imdb_search():
     if len(response) is 1:
         print response[0]['poster']
         print response[0]['imdb_id']
-        return str(response)
+        return json.dumps(response)
     else:
         return "{Error: No Results}"
 
