@@ -40,8 +40,10 @@ def index():
 @app.route('/api/ps', methods=['POST'])
 def movie_search():
     term = request.form['q']
-    term = re.escape(term)
-    cur = g.db.execute("SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\");")
+    term = term.replace("'", "")
+    query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\");"
+    print query
+    cur = g.db.execute(query)
     #convert sql result to json and return
     entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
     print entries
@@ -50,7 +52,7 @@ def movie_search():
 @app.route('/api/tk', methods=['POST'])
 def tastekid_search():
     term = request.form['q']
-    term = re.escape(term)
+    term = term.replace("'", "")
     response = json.loads(tk.get_similar_movies_from_artists(term))
     print response
     return json.dumps(response)
@@ -59,7 +61,7 @@ def tastekid_search():
 def imdb_search():
     term = request.form['q']
     term = urllib.url2pathname(term)
-    term = re.escape(term)
+    term = term.replace("'", "")
     print term
     response = json.loads(ia.get_info(movie=term))
     print response
@@ -67,8 +69,10 @@ def imdb_search():
         if 'poster' in response[0].keys():
             poster =  response[0]['poster']
         title =  response[0]['title']
+        term = title.replace("'", "")
         imdb_id = response[0]['imdb_id']
-        cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + title  + "%');")
+        cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
+        result = cur.fetchone()
 
         return json.dumps(response)
     else:
