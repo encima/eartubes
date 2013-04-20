@@ -67,6 +67,10 @@ function getMovieInfo(name){
             $("#query-title").html(data[0]['title']);
             $("#query-poster").html('<img src="'+data[0]['poster']+'" />');
             $("#results").fadeIn(500);
+            var spaceLeft = $(window).height() - $("header").height() - $("#beam").height()-80;
+            $("#results").animate({height: spaceLeft+'px'},300);
+            var spaceForImage = $("#query").height() - $("#query-title").height();
+            $("#query-poster img").css({'height':spaceForImage+"px"});
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
             console.log("error: "+textStatus);
