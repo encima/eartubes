@@ -48,18 +48,20 @@ def movie_search():
 def tastekid_search():
     term = request.args.get('q')
     response = json.loads(tk.get_similar_movies_from_artists(term))
+    print response
     return str(response)
 
 @app.route('/api/imdb', methods=['GET'])
 def imdb_search():
     term = request.args.get('q')
     response = json.loads(ia.get_info(movie=term))
-    print response[0]['poster']
-    print response[0]['imdb_id']
-    for key in response[0]:
-        print key
-        print response[0][key]
-    return str(response[0])
+    print response
+    if len(response) is 1:
+        print response[0]['poster']
+        print response[0]['imdb_id']
+        return str(response)
+    else:
+        return "{Error: No Results}"
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
