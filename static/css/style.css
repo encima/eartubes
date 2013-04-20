@@ -220,3 +220,19 @@ header{
     top:150px;
 }
 
+#results #query{
+    width:300px;
+    margin-left:15px;
+    padding-right:10px;
+    border-right:1px solid #ddd;
+}
+
+#results #query-poster{
+    width:300px;
+    max-height:350px;
+    overflow:hidden;
+}
+#results #query-poster img{
+    width:100%;
+}
+
