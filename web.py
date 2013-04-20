@@ -1,6 +1,9 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
 import sqlite3
+from api.imdb_api import IMDBApi as imdb
+from api.tastekid_api import TastekidApi as taste
+from api.lastfm_handler import LastFMHandler as lastfm
 
 DEBUG = True
 DATABASE = 'data.db'
@@ -40,6 +43,10 @@ def movie_search():
     entries = [dict(id=row[0], title=row[1]) for row in cur.fetchall()]
     print entries
     return json.dumps(entries)
+
+@app.route('/tk', methods=['GET'])
+def tastekid_search():
+
 
 @app.route('/register/', methods=['POST'])
 def register():

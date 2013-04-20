@@ -3,7 +3,7 @@ import urllib2
 import hashlib
 import json
 
-class tastekid_api:
+class TastekidApi:
   def __init__(self, artist):
     self.API_ROOT = "http://www.tastekid.com/ask/ws"
     self.API_APP = "eartubes1763"
