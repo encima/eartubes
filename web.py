@@ -6,6 +6,7 @@ from contextlib import closing
 
 
 DEBUG = True
+DATABASE = 'data/data.db'
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
@@ -15,6 +16,16 @@ PASSWORD = 'default'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
+
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
 
 @app.route('/')
 def index():
@@ -22,6 +33,10 @@ def index():
         return render_template('dashboard.html')
     else:
         return render_template('login.html')
+
+@app.route('/ps', methods=['GET'])
+def search_movies():
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
