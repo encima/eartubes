@@ -14,6 +14,7 @@ PASSWORD = 'default'
 # create our little application :)
 app = Flask(__name__)
 app.config.from_object(__name__)
+tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -37,17 +38,24 @@ def index():
 @app.route('/api/ps', methods=['GET'])
 def movie_search():
     term = request.args.get('q')
-    cur = g.db.execute("SELECT id, title FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
+    cur = g.db.execute("SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
     #convert sql result to json and return
-    entries = [dict(id=row[0], title=row[1]) for row in cur.fetchall()]
+    entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
     print entries
     return json.dumps(entries)
 
 @app.route('/api/tk', methods=['GET'])
 def tastekid_search():
     term = request.args.get('q')
-    tk = TastekidApi()
     return tk.get_similar_movies_from_artists(term)
+
+@app.route('/api/imdb', methods=['GET'])
+def imdb_search():
+    term = request.args.get('q')
+    response = ia.get_info(term)
+    # for key,value in response.iteritems():
+    #     print value
+    return response
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
