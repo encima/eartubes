@@ -3,7 +3,7 @@ import json
 import sqlite3
 
 DEBUG = True
-DATABASE = 'data/data.db'
+DATABASE = 'data.db'
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
@@ -31,10 +31,19 @@ def index():
     else:
         return render_template('login.html')
 
+#partial search for movies from sqlite
+@app.route('/ps', methods=['GET'])
+def movie_search():
+    term = request.args.get('q')
+    cur = g.db.execute("SELECT id, title FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
+    #convert sql result to json and return
+    entries = [dict(id=row[0], title=row[1]) for row in cur.fetchall()]
+    print entries
+    return json.dumps(entries)
+
 @app.route('/register/', methods=['POST'])
 def register():
     error = None
-
 
 @app.route('/login/', methods=['POST'])
 def login():
