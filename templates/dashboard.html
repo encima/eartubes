@@ -125,14 +125,9 @@ $("#movie_name").keyup(function(event){
     var request = $("#movie_name").val();
     if(request.length > 2 && requesting == false){
         $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
+        $("#results").stop().fadeOut(400);
         getMoviesByName(request);
     }
 });
-
-$("#clicker").click(function(event){
-        event.stopImmediatePropagation();
-        getMovieInfo("Harry Potter and the Philosopher's Stone");
-    });
-
 </script>
 {% endblock %}
