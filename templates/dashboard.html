@@ -57,7 +57,7 @@ function loadListeners(){
 
 function getMovieInfo(name){
     $.ajax({
-        type : 'GET',
+        type : 'POST',
         url : '/api/imdb',
         dataType : 'json',
         data : {
@@ -78,7 +78,7 @@ function getMovieInfo(name){
 function getMoviesByName(name){
     requesting = true;
     $.ajax({
-        type : 'GET',
+        type : 'POST',
         url : '/api/ps',
         dataType : 'json',
         data : {
