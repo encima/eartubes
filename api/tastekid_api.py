@@ -34,7 +34,8 @@ class TastekidApi:
       paramString += "&verbose=1"
     request = self.API_ROOT + "?q=" + paramString + "//" + returnType  + "&format=JSON"
     response = urllib2.urlopen(request).read()
-    return json.dumps(response)
+    return response
+    # return json.dumps(response)
 
 #t = TastekidApi('hans+zimmer')
 #print t.get_similar_movies_from_artists('hans zimmer, hank williams')

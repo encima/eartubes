@@ -1,5 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import json
+import simplejson
 import sqlite3
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
@@ -47,15 +48,17 @@ def movie_search():
 @app.route('/api/tk', methods=['GET'])
 def tastekid_search():
     term = request.args.get('q')
-    return tk.get_similar_movies_from_artists(term)
+    response = json.loads(tk.get_similar_movies_from_artists(term))
+    return response
 
 @app.route('/api/imdb', methods=['GET'])
 def imdb_search():
     term = request.args.get('q')
-    response = ia.get_info(term)
-    # for key,value in response.iteritems():
-    #     print value
-    return response
+    response = json.loads(ia.get_info(movie=term))
+    for key in response[0]:
+        print key
+        print response[0][key]
+    return response[0]
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
