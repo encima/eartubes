@@ -1,12 +1,7 @@
-# all the imports
-import sqlite3
-from flask import Flask, request, session, g, redirect, url_for,\
-    abort, render_template, flash
-from contextlib import closing
-
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+import json
 
 DEBUG = True
-DATABASE = 'data/data.db'
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
@@ -16,16 +11,6 @@ PASSWORD = 'default'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
-
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-@app.teardown_request
-def teardown_request(exception):
-    g.db.close()
 
 @app.route('/')
 def index():
@@ -34,23 +19,22 @@ def index():
     else:
         return render_template('login.html')
 
-@app.route('/ps', methods=['GET'])
-def search_movies():
+@app.route('/register/', methods=['POST'])
+def register():
+    error = None
+    
 
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['POST'])
 def login():
     error = None
-    if request.method == 'POST':
-        if request.form['username'] != USERNAME:
-            error = 'Invalid username'
-        elif request.form['password'] != PASSWORD:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('index'))
-    return render_template('login.html', error=error)
+    if request.form['username'] != USERNAME:
+        error = 'Invalid username'
+    elif request.form['password'] != PASSWORD:
+        error = 'Invalid password'
+    else:
+        session['id'] = 12345
+        return json.dumps({'success':True})
+    return json.dumps({'success':False, 'error':error})
 
 @app.route('/logout')
 def logout():
