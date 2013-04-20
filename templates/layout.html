@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <div id="title">eartub.es</div>
+        {% block header %}
+    
+        {% endblock %}
+    </header>
+
+        {% block promo %}
+    
+        {% endblock %}
+
+    <div id="main">
+        {% block main %}
+
+        {% endblock %}
+    </div>
+</body>
+
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/easing.js"></script>
+<script type="text/javascript" src="/static/js/color.js"></script>
+{% block scripts %}
+
+{% endblock %}
+
+
+</html>

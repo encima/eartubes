@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+
+{% block promo %}
+
+<div id="promo">
+       <div id="account-holder">
+                <div id="login-form" class="account"> 
+                    <h2>Login</h2>
+                    <input type="text" id="login-email" placeholder="Email" />
+                    <input type="password" id="login-password" placeholder="Password" />
+                    <button id="login">Login</button>
+                    <p>Need an account? Please <span class="link" id="show-register">click here</span>.</p>
+                </div>
+
+                <div id="registration-form" class="account">
+                    <h2>Register</h2>
+                    <input type="text" id="registration-email" placeholder="Email" />
+                    <input type="password" id="registration-password1" placeholder="Password" />
+                    <input type="password" id="registration-password2" placeholder="Confirm password" />
+                    <button id="register">Register</button>
+                    <p>Already have an account? Please <span class="link" id="show-login">click here</span>.</p>
+                </div>
+        </div>
+    <h1>Welcome to eartubes</h1>
+    <p>Let us get in your musics and tell you about films that we think you'll like.</p>
+    <p>Make an account or login to get started.</p>
+ 
+</div>
+
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
