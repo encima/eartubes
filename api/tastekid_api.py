@@ -16,7 +16,7 @@ class TastekidApi:
     return self.api_call(params, 'movies', False)
 
   def get_similar_movies(self, movies):
-    artists = artists.split(", ")
+    movies = movies.split(", ")
     params = {}
     for movie in movies:
       movie = movie.replace(" ", "+")
