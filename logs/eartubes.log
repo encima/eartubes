@@ -1,7 +1,7 @@
-*** Starting uWSGI 1.9.5 (64bit) on [Fri Apr 19 10:19:41 2013] ***
-compiled with version: 4.8.0 on 04 April 2013 11:41:26
+*** Starting uWSGI 1.9.6 (64bit) on [Sun Apr 21 10:41:13 2013] ***
+compiled with version: 4.8.0 20130411 (prerelease) on 21 April 2013 10:34:57
 os: Linux-3.8.4-1-ARCH #1 SMP PREEMPT Wed Mar 20 22:10:25 CET 2013
-nodename: christopher-gwilliams
+nodename: eartub
 machine: x86_64
 clock source: unix
 pcre jit disabled
@@ -16,26 +16,30 @@ your memory page size is 4096 bytes
 detected max file descriptor number: 1024
 lock engine: pthread robust mutexes
 uwsgi socket 0 bound to TCP address :3061 fd 3
-Python version: 2.7.3 (default, Dec 22 2012, 21:14:12)  [GCC 4.7.2]
+Python version: 2.7.4 (default, Apr  6 2013, 19:20:36)  [GCC 4.8.0]
 *** Python threads support is disabled. You can enable it with --enable-threads ***
-Python main interpreter initialized at 0x23d3b60
+Python main interpreter initialized at 0x21c8ec0
 your server socket listen backlog is limited to 100 connections
 your mercy for graceful operations on workers is 60 seconds
-mapped 72680 bytes (70 KB) for 1 cores
+mapped 72696 bytes (70 KB) for 1 cores
 *** Operational MODE: single process ***
 failed to open python file ./eartubes/web.py
 unable to load app 0 (mountpoint='') (callable not found or import error)
 *** no app loaded. going in full dynamic mode ***
 *** uWSGI is running in multiple interpreter mode ***
-spawned uWSGI worker 1 (and the only) (pid: 3290, cores: 1)
+spawned uWSGI worker 1 (and the only) (pid: 5138, cores: 1)
 --- no python application found, check your startup logs for errors ---
-[pid: 3290|app: -1|req: -1/1] 131.251.254.123 () {36 vars in 597 bytes} [Fri Apr 19 10:19:46 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+[pid: 5138|app: -1|req: -1/1] 131.251.253.16 () {42 vars in 881 bytes} [Sun Apr 21 10:41:15 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
 --- no python application found, check your startup logs for errors ---
-[pid: 3290|app: -1|req: -1/2] 131.251.254.123 () {36 vars in 559 bytes} [Fri Apr 19 10:19:46 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
-*** Starting uWSGI 1.9.5 (64bit) on [Sat Apr 20 10:56:09 2013] ***
-compiled with version: 4.8.0 on 04 April 2013 11:41:26
+[pid: 5138|app: -1|req: -1/2] 131.251.253.16 () {36 vars in 558 bytes} [Sun Apr 21 10:41:15 2013] GET /favicon.ico => generated 21 bytes in 1 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5138|app: -1|req: -1/3] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:41:17 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5138|app: -1|req: -1/4] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:41:17 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+*** Starting uWSGI 1.9.6 (64bit) on [Sun Apr 21 10:42:06 2013] ***
+compiled with version: 4.8.0 20130411 (prerelease) on 21 April 2013 10:34:57
 os: Linux-3.8.4-1-ARCH #1 SMP PREEMPT Wed Mar 20 22:10:25 CET 2013
-nodename: christopher-gwilliams
+nodename: eartub
 machine: x86_64
 clock source: unix
 pcre jit disabled
@@ -50,19 +54,85 @@ your memory page size is 4096 bytes
 detected max file descriptor number: 1024
 lock engine: pthread robust mutexes
 uwsgi socket 0 bound to TCP address :3061 fd 3
-Python version: 2.7.3 (default, Dec 22 2012, 21:14:12)  [GCC 4.7.2]
+Python version: 2.7.4 (default, Apr  6 2013, 19:20:36)  [GCC 4.8.0]
 *** Python threads support is disabled. You can enable it with --enable-threads ***
-Python main interpreter initialized at 0xab8b60
+Python main interpreter initialized at 0x74eec0
 your server socket listen backlog is limited to 100 connections
 your mercy for graceful operations on workers is 60 seconds
-mapped 72680 bytes (70 KB) for 1 cores
+mapped 72696 bytes (70 KB) for 1 cores
 *** Operational MODE: single process ***
 failed to open python file ./eartubes/web.py
 unable to load app 0 (mountpoint='') (callable not found or import error)
 *** no app loaded. going in full dynamic mode ***
 *** uWSGI is running in multiple interpreter mode ***
-spawned uWSGI worker 1 (and the only) (pid: 9149, cores: 1)
+spawned uWSGI worker 1 (and the only) (pid: 5203, cores: 1)
 --- no python application found, check your startup logs for errors ---
-[pid: 9149|app: -1|req: -1/1] 131.251.253.81 () {42 vars in 881 bytes} [Sat Apr 20 10:56:12 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+[pid: 5203|app: -1|req: -1/1] 131.251.253.16 () {42 vars in 881 bytes} [Sun Apr 21 10:42:07 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
 --- no python application found, check your startup logs for errors ---
-[pid: 9149|app: -1|req: -1/2] 131.251.253.81 () {36 vars in 558 bytes} [Sat Apr 20 10:56:12 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+[pid: 5203|app: -1|req: -1/2] 131.251.253.16 () {36 vars in 558 bytes} [Sun Apr 21 10:42:08 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/3] 131.251.253.16 () {42 vars in 881 bytes} [Sun Apr 21 10:42:09 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/4] 131.251.253.16 () {36 vars in 558 bytes} [Sun Apr 21 10:42:09 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/5] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:42:35 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/6] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:42:35 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/7] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:43:08 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/8] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:43:08 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/9] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:43:39 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/10] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:43:39 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/11] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:43:40 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/12] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:43:40 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/13] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:44:08 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5203|app: -1|req: -1/14] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:44:08 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+*** Starting uWSGI 1.9.6 (64bit) on [Sun Apr 21 10:44:17 2013] ***
+compiled with version: 4.8.0 20130411 (prerelease) on 21 April 2013 10:34:57
+os: Linux-3.8.4-1-ARCH #1 SMP PREEMPT Wed Mar 20 22:10:25 CET 2013
+nodename: eartub
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 1
+current working directory: /usr/share/nginx/html/eartubes
+detected binary path: /usr/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** WARNING: you are running uWSGI without its master process manager ***
+your processes number limit is 3830
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+uwsgi socket 0 bound to TCP address :3061 fd 3
+Python version: 2.7.4 (default, Apr  6 2013, 19:20:36)  [GCC 4.8.0]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0xf94ec0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 72696 bytes (70 KB) for 1 cores
+*** Operational MODE: single process ***
+unable to find "application" callable in file ./web.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 5240, cores: 1)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/1] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:44:19 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/2] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:44:19 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/3] 131.251.253.16 () {42 vars in 881 bytes} [Sun Apr 21 10:44:19 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/4] 131.251.253.16 () {36 vars in 558 bytes} [Sun Apr 21 10:44:20 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/5] 131.251.253.72 () {40 vars in 692 bytes} [Sun Apr 21 10:45:07 2013] GET / => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 5240|app: -1|req: -1/6] 131.251.253.72 () {38 vars in 623 bytes} [Sun Apr 21 10:45:07 2013] GET /favicon.ico => generated 21 bytes in 0 msecs (HTTP/1.1 500) 1 headers in 57 bytes (0 switches on core 0)
