@@ -1,4 +1,5 @@
 import urllib2
+from imdb_api import IMDBApi as ia
 import json
 
 class TastekidApi:
@@ -21,7 +22,17 @@ class TastekidApi:
     for movie in movies:
       movie = movie.replace(" ", "+")
       params[movie] = 'movie'
-    return self.api_call(params, 'movies', False)
+    response = self.api_call(params, 'movies', True)
+    resp = json.loads(response)
+    films = {}
+    if 'Similar' in resp.keys():
+      for r in resp['Similar']['Results']:
+        names.append(r['Name'])
+        imdb = ia()
+        films.append(ia.get_info(r['Name']))
+    else:
+      resp = '{Error:Nothing found or rate exceeded};'
+    return resp
 
   # make call to tastekid
   def api_call(self, params, returnType, verbose):
@@ -37,5 +48,5 @@ class TastekidApi:
     return response
     # return json.dumps(response)
 
-#t = TastekidApi('hans+zimmer')
-#print t.get_similar_movies_from_artists('hans zimmer, hank williams')
+# t = TastekidApi()
+# resp = t.get_similar_movies('titanic')

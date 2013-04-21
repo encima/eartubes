@@ -35,6 +35,7 @@ def teardown_request(exception):
 
 @app.route('/')
 def index():
+    # print get_films_by(1894157, 0, 5)
     if 'id' in session:
         if 'lastfm_username' in session:
             lastfm_user = session['lastfm_username']
@@ -69,25 +70,45 @@ def tastekid_search():
 @app.route('/api/imdb', methods=['POST'])
 def imdb_search():
     term = request.form['q']
-    term = urllib.url2pathname(term)
+    # CHECK THIS COMMENT, MAY NEED FOR ESCAPE
+    #*******
+    # term = urllib.url2pathname(term)
+    #******
     term = term.replace("'", "")
-    response = json.loads(ia.get_info(movie=term))
-    if len(response) is 1:
-        if 'poster' in response[0].keys():
-            poster =  response[0]['poster']
-        title =  response[0]['title']
-        term = title.replace("'", "")
-        imdb_id = response[0]['imdb_id']
-        year = response[0]['year']
-        query = "SELECT id FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + year + " AND kind_id=1;"
-	print query
-        cur = g.db.execute(query)
-        result = g.db.fetchone()
-        query = "UPDATE title SET imdb_id=\"" + imdb_id + "\", poster=\"" + poster + "\" WHERE id=" + result['id'] + ";"
-        print query
-        return json.dumps(response)
-    else:
-        return "{Error: No Results}"
+    # response = json.loads(ia.get_info(movie=term))
+    # print response
+        # poster = None
+        # if 'poster' in response[0].keys():
+        #     poster =  response[0]['poster']
+        # title =  response[0]['title']
+        # term = title.replace("'", "")
+        # imdb_id = response[0]['imdb_id']
+        # year = response[0]['year']
+    query = "SELECT id, title, production_year AS year, poster FROM title WHERE id=" + term  + ";"
+    cur = g.db.execute(query)
+    films = []
+    result = g.db.fetchone()
+    films = [film, result]
+        # query = "UPDATE title SET imdb_id=\"" + str(imdb_id) + "\", poster=\"" + str(poster) + "\" WHERE id=" + str(result['id']) + ";"
+        # print query
+        # g.db.execute(query)
+    return get_films_by(films, result['id'], 0, 5)
+
+def get_films_by(films, id, start, limit):
+    query = "SELECT id, title, production_year AS year, poster from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1 LIMIT %d, %d;" % (start, limit)
+    cur = g.db.execute(query)
+    result = g.db.fetchall()
+    for res in result:
+        if res['poster'] == None:
+            response = json.loads(ia.get_info(res['title'], res['year']))
+            query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
+            g.db.execute(query)
+            # concat response with films list
+            films = [films, response]
+        else:
+            print '*******POSTER FOUND IN DB***********'
+            films = [films, result]
+    return json.dumps(films)
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
