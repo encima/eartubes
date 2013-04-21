@@ -88,7 +88,7 @@ def imdb_search():
     cur = g.db.execute(query)
     films = []
     result = g.db.fetchone()
-    films = [films, result]
+    films.append(result)
         # query = "UPDATE title SET imdb_id=\"" + str(imdb_id) + "\", poster=\"" + str(poster) + "\" WHERE id=" + str(result['id']) + ";"
         # print query
         # g.db.execute(query)
@@ -107,10 +107,10 @@ def get_films_by(films, id, start, limit):
                 query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
                 g.db.execute(query)
             # concat response with films list
-            films = [films, response]
+            films.append(response)
         else:
             print '*******POSTER FOUND IN DB***********'
-            films = [films, result]
+            films.append(result)
     return json.dumps(films)
 
 @app.route('/lastfm_auth/')
