@@ -3,9 +3,10 @@ import json
 import urllib
 import sqlite3
 import re
+import MySQLdb as mdb
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
-from api.lastfm_handler import LastFMHandler 
+from api.lastfm_handler import LastFMHandler
 
 DEBUG = True
 DATABASE = 'data.db'
@@ -19,7 +20,10 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+    connection = mdb.connect(user="root",passwd="",db="data",host="localhost", charset="utf8")
+    cursor = connection.cursor(mdb.cursors.DictCursor)
+    return cursor
+    # return sqlite3.connect(app.config['DATABASE'])
 
 @app.before_request
 def before_request():
@@ -41,20 +45,18 @@ def index():
 def movie_search():
     term = request.form['q']
     term = term.replace("'", "")
-    query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\");"
-    print query
+    query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;"
     cur = g.db.execute(query)
     #convert sql result to json and return
-    entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
-    print entries
-    return json.dumps(entries)
+    # entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
+    resp = g.db.fetchall()
+    return json.dumps(resp)
 
 @app.route('/api/tk', methods=['POST'])
 def tastekid_search():
     term = request.form['q']
     term = term.replace("'", "")
     response = json.loads(tk.get_similar_movies_from_artists(term))
-    print response
     return json.dumps(response)
 
 @app.route('/api/imdb', methods=['POST'])
@@ -62,9 +64,7 @@ def imdb_search():
     term = request.form['q']
     term = urllib.url2pathname(term)
     term = term.replace("'", "")
-    print term
     response = json.loads(ia.get_info(movie=term))
-    print response
     if len(response) is 1:
         if 'poster' in response[0].keys():
             poster =  response[0]['poster']
@@ -72,8 +72,9 @@ def imdb_search():
         term = title.replace("'", "")
         imdb_id = response[0]['imdb_id']
         cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
-        result = cur.fetchone()
-
+        result = g.db.fetchone()
+        query = "INSERT INTO movies ('imdb_id', 'poster') VALUES ('%s', '%s')" % (imdb_id, poster)
+        print query
         return json.dumps(response)
     else:
         return "{Error: No Results}"
@@ -110,4 +111,4 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
