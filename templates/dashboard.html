@@ -139,7 +139,7 @@ function getMovieInfo(id, year){
         },
         success : function(data){
             $("#movie-results").html('');
-            for(var i = 1; i < data.length; i++){
+            for(var i = 1; i < 4; i++){
                 console.log(data[i]);
                 console.log(data[i][0]['title']+": "+data[i][0]['poster']);
                 stuff = '<div class="movie"><div class="poster">';

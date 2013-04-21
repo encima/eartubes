@@ -20,8 +20,8 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    connection = mdb.connect(user="root",passwd="",db="imdb",host="eartub.es", charset="utf8")
-    cursor = connection.cursor(mdb.cursors.DictCursor)
+    g.conn = mdb.connect(user="root",passwd="",db="imdb",host="eartub.es", charset="utf8")
+    cursor = g.conn.cursor(mdb.cursors.DictCursor)
     return cursor
     # return sqlite3.connect(app.config['DATABASE'])
 
@@ -32,6 +32,7 @@ def before_request():
 @app.teardown_request
 def teardown_request(exception):
     g.db.close()
+    g.conn.close()
 
 @app.route('/')
 def index():
@@ -53,7 +54,7 @@ def movie_search():
     term = request.form['q']
     term = term.replace("'", "")
     # query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;"
-    query = "SELECT id, title, production_year AS year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND kind_id=1 LIMIT 10;" 
+    query = "SELECT id, title, production_year AS year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND kind_id=1 ORDER BY rating DESC LIMIT 10;" 
     cur = g.db.execute(query)
     #convert sql result to json and return
     #entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
@@ -74,7 +75,7 @@ def imdb_search():
     #*******
     # term = urllib.url2pathname(term)
     #******
-    term = term.replace("'", "")
+    print term
     # response = json.loads(ia.get_info(movie=term))
     # print response
         # poster = None
@@ -91,9 +92,12 @@ def imdb_search():
     result = json.loads(ia.get_info(result['title'], result['year']))
     print result
     films.append(result)
-    if 'poster' in result:
-        query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\" WHERE id=" + str(term) + ";"
+    if 'poster' in result[0]:
+        print 'poster is in result, updating!'
+        query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\", rating=\"" + str(result[0]['rating']) + "\" WHERE id=" + str(term) + ";"
+        print query;
         g.db.execute(query)
+        g.conn.commit()
     return get_films_by(films, term, 0, 5)
 
 def get_films_by(films, id, start, limit):
@@ -104,8 +108,11 @@ def get_films_by(films, id, start, limit):
         if res['poster'] == None:
             response = json.loads(ia.get_info(res['title'], res['year']))
             if 'poster' in response[0].keys():
-                query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
+                # query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
+                query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\", rating=\"" + str(response[0]['rating']) + "\" WHERE id=" + str(res['id']) + ";"
+                print query
                 g.db.execute(query)
+                g.conn.commit()
             # concat response with films list
             films.append(response)
         else:
