@@ -1,4 +1,5 @@
 import urllib2
+from imdb_api import IMDBApi
 import json
 
 class TastekidApi:
@@ -21,7 +22,8 @@ class TastekidApi:
     for movie in movies:
       movie = movie.replace(" ", "+")
       params[movie] = 'movie'
-    return self.api_call(params, 'movies', False)
+    response = self.api_call(params, 'movies', True)
+    print type(response)
 
   # make call to tastekid
   def api_call(self, params, returnType, verbose):
