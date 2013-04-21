@@ -20,10 +20,10 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    connection = mdb.connect(user="root",passwd="",db="data",host="localhost", charset="utf8")
-    cursor = connection.cursor(mdb.cursors.DictCursor)
-    return cursor
-    # return sqlite3.connect(app.config['DATABASE'])
+    #connection = mdb.connect(user="root",passwd="",db="data",host="localhost", charset="utf8")
+    #cursor = connection.cursor(mdb.cursors.DictCursor)
+    #return cursor
+    return sqlite3.connect(app.config['DATABASE'])
 
 @app.before_request
 def before_request():
@@ -51,9 +51,9 @@ def movie_search():
     query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;"
     cur = g.db.execute(query)
     #convert sql result to json and return
-    # entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
-    resp = g.db.fetchall()
-    return json.dumps(resp)
+    entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
+    #resp = g.db.fetchall()
+    return json.dumps(entries)
 
 @app.route('/api/tk', methods=['POST'])
 def tastekid_search():
@@ -74,8 +74,10 @@ def imdb_search():
         title =  response[0]['title']
         term = title.replace("'", "")
         imdb_id = response[0]['imdb_id']
-        cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
-        result = g.db.fetchone()
+        cur = g.db.cursor()
+        #cur = g.db.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');")
+        result = cur.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');").fetchone()
+        #result = g.db.fetchone()
         query = "INSERT INTO movies ('imdb_id', 'poster') VALUES ('%s', '%s')" % (imdb_id, poster)
         print query
         return json.dumps(response)
