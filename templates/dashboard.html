@@ -5,7 +5,7 @@
 <div id="beam">
 
     <div class="column">
-        {% if lastfm %}
+        {% if not lastfm_username == None%}
         <div id="lastfm_enabled" style="display:block">
             <h1 class="indent">Welcome back, {{ lastfm_username }} <img src="/static/media/lastfm.gif" style="vertical-align:middle; height:30px;" /></h1>
             <p class="indent">Suggest movies based on one of these categories</p>
@@ -15,7 +15,7 @@
             </p>
         </div>
         {% endif %}
-        {% if not lastfm %}
+        {% if lastfm == None%}
         <div id="lastfm_disabled" style="display:none">
             <h1 class="indent">Connect your Last.fm account</h1>
             <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
