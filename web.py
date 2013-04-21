@@ -133,15 +133,14 @@ def register():
 @app.route('/login/', methods=['POST'])
 def login():
     error = None
-    query = "select user from"
-    if request.form['email'] != USERNAME:
-        error = 'Invalid username'
-    elif request.form['password'] != PASSWORD:
-        error = 'Invalid password'
-    else:
+    query = "SELECT COUNT(*) FROM users WHERE user=%d AND pass=%d;" % (request.form['email']), request.form['password'])
+    cur = g.db.execute(query)
+    result = g.db.fetchone()
+    if result[0] == 1
         session['id'] = 12345
         return json.dumps({'success':True})
-    return json.dumps({'success':False, 'error':error})
+        
+    return json.dumps({'success':False, 'error':'Invalid username and/or password'})
 
 @app.route('/logout/')
 def logout():
