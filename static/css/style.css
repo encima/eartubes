@@ -65,7 +65,7 @@ header{
     font-family:'Helvetica Neue', 'Helvetica';
     font-weight:lighter;
     font-size:30px;
-    margin-top:5px;;
+    margin-top:25px;;
     margin-bottom:10px;
     text-shadow:1px 1px 1px #222;
 }
@@ -244,4 +244,22 @@ header{
 
 .error{
     color:red;
+}
+
+.lastfm-button{
+    height:40px;
+    font-size:20px;
+    padding:8px;
+    padding-left:42px;
+    padding-right:10px;
+    background:url('/static/media/lastfm-button.png') rgba(0,0,0,0.3);
+    background-size:40px auto;
+    background-position:left center;
+    background-repeat:no-repeat;
+    margin:10px;
+    border-radius:7px;
+/*    border:1px solid #ccc;*/
+    border:none;
+    color:white;
+    cursor:pointer;
 }
