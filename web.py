@@ -99,17 +99,14 @@ def get_films_by(films, id, start, limit):
     cur = g.db.execute(query)
     result = g.db.fetchall()
     for res in result:
-        print res
         if res['poster'] == None:
             response = json.loads(ia.get_info(res['title'], res['year']))
-            print response
             if 'poster' in response[0].keys():
                 query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
                 g.db.execute(query)
             # concat response with films list
             films.append(response)
         else:
-            print '*******POSTER FOUND IN DB***********'
             films.append(result)
     return json.dumps(films)
 
@@ -135,6 +132,7 @@ def register():
 @app.route('/login/', methods=['POST'])
 def login():
     error = None
+    query = "select user from"
     if request.form['email'] != USERNAME:
         error = 'Invalid username'
     elif request.form['password'] != PASSWORD:
