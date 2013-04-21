@@ -149,7 +149,7 @@ function getMovieInfo(id, year){
                 if(data[i]['poster'] != null){
                     stuff = stuff + '<img src="'+data[i]['poster']+'" />';
                 }
-                else{stuff = stuff + '<img src="/static/media/movie_default.gif" style="opacity:0.6;" />';}
+                else{stuff = stuff + '<img src="/static/media/movie_default.gif" style="opacity:0.6; width:170px;" />';}
                 stuff = stuff + '<div class="info"><p>';
                 stuff = stuff + data[i]['title']+'</p><p>';
                 stuff = stuff + data[i]['year']+'</p></div>';
@@ -159,7 +159,7 @@ function getMovieInfo(id, year){
             if(data[0]['poster'] != null){
                 posterHTML = '<img src="'+data[0]['poster']+'" />'
             }
-            else{posterHTML = '<p class="error">Sorry, we couldn\'t find an image for this movie.</p><img src="/static/media/movie_default.gif" style="opacity:0.6;width:100%;height:auto;top:50px;" />';}
+            else{posterHTML = '<p class="error">Sorry, we couldn\'t find an image for this movie.</p>';}
             updateQueryWithImage(posterHTML);
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
