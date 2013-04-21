@@ -94,7 +94,7 @@ def lastfm_auth():
     handler = LastFMHandler()
     return redirect(handler.get_request_auth())
 
-@app.route('/lastfm_callback')
+@app.route('/lastfm_caller')
 def lastfm_callback():
     handler = LastFMHandler()
     info = handler.authenticate_service(request)
