@@ -20,7 +20,7 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    connection = mdb.connect(user="root",passwd="imdb",db="imdb",host="eartub.es", charset="utf8")
+    connection = mdb.connect(user="root",passwd="",db="imdb",host="eartub.es", charset="utf8")
     cursor = connection.cursor(mdb.cursors.DictCursor)
     return cursor
     # return sqlite3.connect(app.config['DATABASE'])
@@ -89,6 +89,7 @@ def imdb_search():
     films = []
     result = g.db.fetchone()
     result = json.loads(ia.get_info(result['title'], result['year']))
+    print result
     films.append(result)
     if 'poster' in result:
         query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\" WHERE id=" + str(term) + ";"
@@ -103,8 +104,7 @@ def get_films_by(films, id, start, limit):
         if res['poster'] == None:
             response = json.loads(ia.get_info(res['title'], res['year']))
             if 'poster' in response[0].keys():
-                # query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
-                query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\"  WHERE id=" + str(term) + ";"
+                query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
                 g.db.execute(query)
             # concat response with films list
             films.append(response)
