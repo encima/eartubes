@@ -35,6 +35,7 @@ def teardown_request(exception):
 
 @app.route('/')
 def index():
+    # print get_films_by(1894157, 0, 5)
     if 'id' in session:
         if 'lastfm_username' in session:
             lastfm_user = session['lastfm_username']
@@ -93,10 +94,21 @@ def imdb_search():
         return "{Error: No Results}"
 
 def get_films_by(id, start, limit):
-    query = "SELECT id, title, production_year AS year from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1;"
+    query = "SELECT id, title, production_year AS year, poster from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1 LIMIT %d, %d;" % (start, limit)
     cur = g.db.execute(query)
     result = g.db.fetchall()
-    return json.dumps(result)
+    films = []
+    for res in result:
+        if res['poster'] == None:
+            response = json.loads(ia.get_info(res['title'], res['year']))
+            query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
+            g.db.execute(query)
+            # concat response with films list
+            films = [films, response]
+        else:
+            print '*******POSTER FOUND IN DB***********'
+            films = [films, result]
+    return json.dumps(films)
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
