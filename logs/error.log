@@ -1082,3 +1082,5 @@
 131.251.253.16 - - [21/Apr/2013:12:46:36 +0000] "POST /api/ps HTTP/1.1" 200 715 "http://eartub.es/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.56 Safari/537.36"
 131.251.253.16 - - [21/Apr/2013:12:46:39 +0000] "POST /api/ps HTTP/1.1" 200 2 "http://eartub.es/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.56 Safari/537.36"
 131.251.253.16 - - [21/Apr/2013:12:46:44 +0000] "POST /api/ps HTTP/1.1" 200 409 "http://eartub.es/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.56 Safari/537.36"
+131.251.253.16 - - [21/Apr/2013:12:54:23 +0000] "GET /static/media/lastfm-button-red.png HTTP/1.1" 304 0 "http://eartub.es/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.56 Safari/537.36"
+131.251.253.16 - - [21/Apr/2013:12:58:34 +0000] "GET /static/media/lastfm-button.png HTTP/1.1" 304 0 "http://eartub.es/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.56 Safari/537.36"

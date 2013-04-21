@@ -92,6 +92,12 @@ def imdb_search():
     else:
         return "{Error: No Results}"
 
+def get_films_by(id, start, limit):
+    query = ""
+    cur = g.db.execute(query)
+    result = g.db.fetchall()
+    return json.dumps(result)
+
 @app.route('/lastfm_auth/')
 def lastfm_auth():
     handler = LastFMHandler()
