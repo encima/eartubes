@@ -3,7 +3,7 @@ import json
 import urllib
 import sqlite3
 import re
-#import MySQLdb as mdb
+import MySQLdb as mdb
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
 from api.lastfm_handler import LastFMHandler
