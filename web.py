@@ -88,28 +88,27 @@ def imdb_search():
     cur = g.db.execute(query)
     films = []
     result = g.db.fetchone()
+    result = json.loads(ia.get_info(result['title'], result['year']))
+    print result
     films.append(result)
-        # query = "UPDATE title SET imdb_id=\"" + str(imdb_id) + "\", poster=\"" + str(poster) + "\" WHERE id=" + str(result['id']) + ";"
-        # print query
-        # g.db.execute(query)
-    return get_films_by(films, result['id'], 0, 5)
+    if 'poster' in result:
+        query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\" WHERE id=" + str(term) + ";"
+        g.db.execute(query)
+    return get_films_by(films, term, 0, 5)
 
 def get_films_by(films, id, start, limit):
     query = "SELECT id, title, production_year AS year, poster from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1 LIMIT %d, %d;" % (start, limit)
     cur = g.db.execute(query)
     result = g.db.fetchall()
     for res in result:
-        print res
         if res['poster'] == None:
             response = json.loads(ia.get_info(res['title'], res['year']))
-            print response
             if 'poster' in response[0].keys():
                 query = "UPDATE title SET imdb_id=\"" + str(response[0]['imdb_id']) + "\", poster=\"" + str(response[0]['poster']) + "\" WHERE id=" + str(res['id']) + ";"
                 g.db.execute(query)
             # concat response with films list
             films.append(response)
         else:
-            print '*******POSTER FOUND IN DB***********'
             films.append(result)
     return json.dumps(films)
 
@@ -135,14 +134,14 @@ def register():
 @app.route('/login/', methods=['POST'])
 def login():
     error = None
-    if request.form['email'] != USERNAME:
-        error = 'Invalid username'
-    elif request.form['password'] != PASSWORD:
-        error = 'Invalid password'
-    else:
+    query = "SELECT COUNT(*) FROM users WHERE user='" + request.form['email'] + "' AND pass='" + request.form['password'] + "';"
+    g.db.execute(query)
+    result = g.db.fetchone()
+    if result['COUNT(*)'] == 1:
         session['id'] = 12345
         return json.dumps({'success':True})
-    return json.dumps({'success':False, 'error':error})
+        
+    return json.dumps({'success':False, 'error':'Invalid username and/or password'})
 
 @app.route('/logout/')
 def logout():
