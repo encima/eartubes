@@ -149,18 +149,28 @@ function getMovieInfo(id, year){
                 else{stuff = stuff + '<img src="/static/media/movie_default.gif" style="opacity:0.6; width:170px;" />';}
                 stuff = stuff + '</div><div class="info"><p>';
                 stuff = stuff + data[i][0]['title']+'</p><p>';
-                stuff = stuff + data[i][0]['year']+'</p><p>'+data[i][0]['plot_sample']+'</p></div>';
+                stuff = stuff + data[i][0]['year']+'</p><p><i>'+data[i][0]['plot_simple']+'</i></p><p><strong>IMDB Rating: '+data[i][0]['rating']+'</p>';
+                stuff = stuff + '<p><strong><a href="'+data[i][0]['imdb_url']+'" target="_blank">IMDB Page</a></p>';
+                stuff = stuff + '<p><strong>Starring:</strong><br /><i>';
+                for(var y = 0; y < data[i][0]['actors'].length; y++){
+                    stuff = stuff + data[i][0]['actors'][y]+', ';
+                    if(y == 4){y = data[i][0]['actors'].length;}
+                }
+                stuff = stuff + '</i></p></div>';
                 $("#movie-results").append(stuff);
                 loadListeners();
             }
             posterHTML = "";
-            if(data[0]['poster'] != null){
-                posterHTML = posterHTML + '<img src="'+data[0]['poster']+'" />'
+            if(data[0][0]['poster'] != null){
+                posterHTML = posterHTML + '<img src="'+data[0][0]['poster']+'" />'
             }
+            
+            else{posterHTML = '<p class="error">Sorry, we couldn\'t find an image for this movie.</p>';}
+            
             if(data.length < 2){
                 posterHTML = posterHTML + '<p class="error">Sorry, we couldn\'t find any movies similar to this one by soundtrack</p>';
             }
-            else{posterHTML = '<p class="error">Sorry, we couldn\'t find an image for this movie.</p>';}
+
             updateQueryWithImage(posterHTML);
             loadListeners();
         },

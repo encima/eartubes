@@ -260,6 +260,7 @@ p{color:#aaa;}
     position:relative;
     float:left;
     border-radius:8px;
+    overflow:hidden;
 }
 #results #movie-results .movie .poster{
     position:absolute;
@@ -290,7 +291,9 @@ p{color:#aaa;}
     color:white;
 }
 
-    
+.info p a:link{color:cyan; text-decoration:underline;}
+.info p a:hover{color:white; text-decoration:underline;}
+.info p a:visited{color:cyan;text-decoration:underline;}    
 
 .error{
     color:red;
