@@ -88,10 +88,11 @@ def imdb_search():
     cur = g.db.execute(query)
     films = []
     result = g.db.fetchone()
+    result = films.append(json.loads(ia.get_info(result['title'], result['year'])))
     films.append(result)
-        # query = "UPDATE title SET imdb_id=\"" + str(imdb_id) + "\", poster=\"" + str(poster) + "\" WHERE id=" + str(result['id']) + ";"
-        # print query
-        # g.db.execute(query)
+    if 'poster' in result:
+        query = "UPDATE title SET imdb_id=\"" + str(result['imdb_id']) + "\", poster=\"" + str(result['poster']) + "\" WHERE id=" + str(term) + ";"
+        g.db.execute(query)
     return get_films_by(films, result['id'], 0, 5)
 
 def get_films_by(films, id, start, limit):
