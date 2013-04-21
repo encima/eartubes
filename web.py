@@ -80,7 +80,7 @@ def imdb_search():
         imdb_id = response[0]['imdb_id']
         year = response[0]['year']
         query = "SELECT id FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + year + " AND kind_id=1;"
-	print query
+	    print query
         cur = g.db.execute(query)
         result = g.db.fetchone()
         query = "UPDATE title SET imdb_id=\"" + imdb_id + "\", poster=\"" + poster + "\" WHERE id=" + result['id'] + ";"
