@@ -3,7 +3,7 @@ import json
 import urllib
 import sqlite3
 import re
-import MySQLdb as mdb
+#import MySQLdb as mdb
 from api.imdb_api import IMDBApi
 from api.tastekid_api import TastekidApi
 from api.lastfm_handler import LastFMHandler
@@ -36,9 +36,10 @@ def teardown_request(exception):
 @app.route('/')
 def index():
     if 'id' in session:
-        lastfm_username = session['lastfm_username']
-        
-        return render_template('dashboard.html')
+        if 'lastfm_username' in session:
+            lastfm_username = session['lastfm_username']
+        else: lastfm_username = None
+        return render_template('dashboard.html', lastfm_username = lastfm_username)
     else:
         return render_template('login.html')
 
