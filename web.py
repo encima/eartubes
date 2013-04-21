@@ -49,7 +49,7 @@ def movie_search():
     term = request.form['q']
     term = term.replace("'", "")
     # query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;"
-    query = "SELECT id, title, production_year AS year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;" 
+    query = "SELECT id, title, production_year AS year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND kind_id=1 LIMIT 10;" 
     cur = g.db.execute(query)
     #convert sql result to json and return
     #entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
