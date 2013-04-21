@@ -88,12 +88,13 @@ def imdb_search():
     cur = g.db.execute(query)
     films = []
     result = g.db.fetchone()
-    result = films.append(json.loads(ia.get_info(result['title'], result['year'])))
+    result = json.loads(ia.get_info(result['title'], result['year']))
+    print result
     films.append(result)
     if 'poster' in result:
-        query = "UPDATE title SET imdb_id=\"" + str(result['imdb_id']) + "\", poster=\"" + str(result['poster']) + "\" WHERE id=" + str(term) + ";"
+        query = "UPDATE title SET imdb_id=\"" + str(result[0]['imdb_id']) + "\", poster=\"" + str(result[0]['poster']) + "\" WHERE id=" + str(term) + ";"
         g.db.execute(query)
-    return get_films_by(films, result['id'], 0, 5)
+    return get_films_by(films, term, 0, 5)
 
 def get_films_by(films, id, start, limit):
     query = "SELECT id, title, production_year AS year, poster from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1 LIMIT %d, %d;" % (start, limit)
@@ -133,10 +134,10 @@ def register():
 @app.route('/login/', methods=['POST'])
 def login():
     error = None
-    query = "SELECT COUNT(*) FROM users WHERE user=%d AND pass=%d;" % (request.form['email']), request.form['password'])
-    cur = g.db.execute(query)
+    query = "SELECT COUNT(*) FROM users WHERE user='" + request.form['email'] + "' AND pass='" + request.form['password'] + "';"
+    g.db.execute(query)
     result = g.db.fetchone()
-    if result[0] == 1
+    if result['COUNT(*)'] == 1:
         session['id'] = 12345
         return json.dumps({'success':True})
         
