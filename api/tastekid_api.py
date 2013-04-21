@@ -24,11 +24,14 @@ class TastekidApi:
       params[movie] = 'movie'
     response = self.api_call(params, 'movies', True)
     resp = json.loads(response)
-    print resp
-    for r in resp['Similar']['Results']:
-      names.append(r['Name'])
-      imdb = ia()
-      print ia.get_info(r['Name'])
+    films = {}
+    if 'Similar' in resp.keys():
+      for r in resp['Similar']['Results']:
+        names.append(r['Name'])
+        imdb = ia()
+        films.append(ia.get_info(r['Name']))
+    else:
+      resp = '{Error:Nothing found or rate exceeded};'
     return resp
 
   # make call to tastekid
@@ -45,5 +48,5 @@ class TastekidApi:
     return response
     # return json.dumps(response)
 
-t = TastekidApi()
-resp = t.get_similar_movies('titanic')
+# t = TastekidApi()
+# resp = t.get_similar_movies('titanic')

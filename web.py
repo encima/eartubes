@@ -71,20 +71,23 @@ def imdb_search():
     term = request.form['q']
     term = urllib.url2pathname(term)
     term = term.replace("'", "")
+    print term
     response = json.loads(ia.get_info(movie=term))
+    print response
     if len(response) is 1:
+        poster = None
         if 'poster' in response[0].keys():
             poster =  response[0]['poster']
         title =  response[0]['title']
         term = title.replace("'", "")
         imdb_id = response[0]['imdb_id']
         year = response[0]['year']
-        query = "SELECT id FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + year + " AND kind_id=1;"
-	    print query
+        query = "SELECT id FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + str(year) + " AND kind_id=1;"
         cur = g.db.execute(query)
         result = g.db.fetchone()
-        query = "UPDATE title SET imdb_id=\"" + imdb_id + "\", poster=\"" + poster + "\" WHERE id=" + result['id'] + ";"
+        query = "UPDATE title SET imdb_id=\"" + str(imdb_id) + "\", poster=\"" + str(poster) + "\" WHERE id=" + str(result['id']) + ";"
         print query
+        g.db.execute(query)
         return json.dumps(response)
     else:
         return "{Error: No Results}"
