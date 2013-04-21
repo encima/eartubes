@@ -38,8 +38,11 @@ def index():
     if 'id' in session:
         if 'lastfm_username' in session:
             lastfm_username = session['lastfm_username']
-        else: lastfm_username = None
-        return render_template('dashboard.html', lastfm_username = lastfm_username)
+            lastfm = True
+        else: 
+            lastfm_username = None
+            lastfm = False
+        return render_template('dashboard.html', lastfm_username = lastfm_username, lastfm = lastfm)
     else:
         return render_template('login.html')
 

@@ -5,12 +5,7 @@
 <div id="beam">
 
     <div class="column">
-        <div id="lastfm_disabled" style="display:none">
-            <h1 class="indent">Connect your Last.fm account</h1>
-            <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
-            <p class="indent">Click the button below to redirect you to Last.fm to connect your eartub.es account to your Last.fm account.</p>
-            <a href="/lastfm_auth/"><img src="/static/media/lastfm.gif" id="lastfm-connect" /></a>
-        </div>
+        {% if lastfm %}
         <div id="lastfm_enabled" style="display:block">
             <h1 class="indent">Welcome back, {{ lastfm_username }} <img src="/static/media/lastfm.gif" style="vertical-align:middle; height:30px;" /></h1>
             <p class="indent">Suggest movies based on one of these categories</p>
@@ -19,6 +14,15 @@
                 <button class="lastfm-button" id="recent-tracks">Your recently listened tracks</button>
             </p>
         </div>
+        {% endif %}
+        {% if not lastfm %}
+        <div id="lastfm_disabled" style="display:none">
+            <h1 class="indent">Connect your Last.fm account</h1>
+            <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
+            <p class="indent">Click the button below to redirect you to Last.fm to connect your eartub.es account to your Last.fm account.</p>
+            <a href="/lastfm_auth/"><img src="/static/media/lastfm.gif" id="lastfm-connect" /></a>
+        </div>
+        {% endif %}
     </div>
     <div class="column">
         <h1 class="indent">Or try searching a film you like</h1>
