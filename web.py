@@ -70,7 +70,6 @@ def tastekid_search():
 @app.route('/api/imdb', methods=['POST'])
 def imdb_search():
     term = request.form['q']
-    year = request.form['year']
     # CHECK THIS COMMENT, MAY NEED FOR ESCAPE
     #*******
     # term = urllib.url2pathname(term)
@@ -85,7 +84,7 @@ def imdb_search():
         # term = title.replace("'", "")
         # imdb_id = response[0]['imdb_id']
         # year = response[0]['year']
-    query = "SELECT id, title, production_year AS year, poster FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + str(year) + " AND kind_id=1;"
+    query = "SELECT id, title, production_year AS year, poster FROM title WHERE id=" + term  + ";"
     cur = g.db.execute(query)
     films = []
     result = g.db.fetchone()
