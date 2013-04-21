@@ -20,7 +20,7 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    connection = mdb.connect(user="root",passwd="",db="data",host="localhost", charset="utf8")
+    connection = mdb.connect(user="root",passwd="",db="imdb",host="localhost", charset="utf8")
     cursor = connection.cursor(mdb.cursors.DictCursor)
     return cursor
     # return sqlite3.connect(app.config['DATABASE'])
