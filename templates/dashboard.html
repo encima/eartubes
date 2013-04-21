@@ -5,8 +5,8 @@
 <div id="beam">
 
     <div class="column">
-        {% if not lastfm_username == None%}
-        <div id="lastfm_enabled" style="display:block">
+        {% if lastfm_enabled == True %}
+        <div id="lastfm_enabled">
             <h1 class="indent">Welcome back, {{ lastfm_username }} <img src="/static/media/lastfm.gif" style="vertical-align:middle; height:30px;" /></h1>
             <p class="indent">Suggest movies based on one of these categories</p>
             <p class="indent">
@@ -15,8 +15,8 @@
             </p>
         </div>
         {% endif %}
-        {% if lastfm == None%}
-        <div id="lastfm_disabled" style="display:none">
+        {% if lastfm_enabled == False %}
+        <div id="lastfm_disabled">
             <h1 class="indent">Connect your Last.fm account</h1>
             <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
             <p class="indent">Click the button below to redirect you to Last.fm to connect your eartub.es account to your Last.fm account.</p>

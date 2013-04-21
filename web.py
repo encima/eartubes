@@ -20,7 +20,7 @@ app.config.from_object(__name__)
 tk, ia= TastekidApi(), IMDBApi()
 
 def connect_db():
-    connection = mdb.connect(user="root",passwd="",db="imdb",host="localhost", charset="utf8")
+    connection = mdb.connect(user="root",passwd="",db="imdb",host="eartub.es", charset="utf8")
     cursor = connection.cursor(mdb.cursors.DictCursor)
     return cursor
     # return sqlite3.connect(app.config['DATABASE'])
@@ -37,12 +37,12 @@ def teardown_request(exception):
 def index():
     if 'id' in session:
         if 'lastfm_username' in session:
-            lastfm_username = session['lastfm_username']
+            lastfm_user = session['lastfm_username']
             lastfm = True
         else: 
-            lastfm_username = None
+            lastfm_user = None
             lastfm = False
-        return render_template('dashboard.html', lastfm_username = lastfm_username, lastfm = lastfm)
+        return render_template('dashboard.html', lastfm_username = lastfm_user, lastfm_enabled = lastfm)
     else:
         return render_template('login.html')
 
@@ -63,7 +63,7 @@ def movie_search():
 def tastekid_search():
     term = request.form['q']
     term = term.replace("'", "")
-    response = json.loads(tk.get_similar_movies_from_artists(term))
+    response = json.loads(tk.get_similar_movies(term))
     return json.dumps(response)
 
 @app.route('/api/imdb', methods=['POST'])
