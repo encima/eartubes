@@ -26,8 +26,8 @@ class LastFMHandler:
         responseDict = self.api_call("auth.getSession", {'api_key':self.API_KEY, 'token':token})
         if "error" in responseDict:
             return None
-        session_key = responseDict['session']['key']
-        username = responseDict['session']['name']
+        session_key = responseDict[0]['session']['key']
+        username = responseDict[0]['session']['name']
         return(session_key, username) 
 
     # Return set of tracks recently played by the specified user
