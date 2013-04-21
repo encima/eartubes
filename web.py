@@ -49,12 +49,12 @@ def movie_search():
     term = request.form['q']
     term = term.replace("'", "")
     # query = "SELECT id, title, year FROM movies WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;"
-    query = "SELECT id, title, production_year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;" 
+    query = "SELECT id, title, production_year AS year FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") LIMIT 10;" 
     cur = g.db.execute(query)
     #convert sql result to json and return
-    entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
-    #resp = g.db.fetchall()
-    return json.dumps(entries)
+    #entries = [dict(id=row[0], title=row[1], year=row[2]) for row in cur.fetchall()]
+    resp = g.db.fetchall()
+    return json.dumps(resp)
 
 @app.route('/api/tk', methods=['POST'])
 def tastekid_search():
@@ -76,7 +76,7 @@ def imdb_search():
         term = title.replace("'", "")
         imdb_id = response[0]['imdb_id']
         year = response[0]['year']
-        cur = g.db.cursor()
+        #cur = g.db.cursor()
         cur = g.db.execute("SELECT id FROM title WHERE UPPER(title) LIKE UPPER(\"%" + term  + "%\") AND production_year=" + year + " AND kind_id=1;")
         # result = cur.execute("SELECT id FROM movies WHERE UPPER(title) LIKE UPPER('%" + term  + "%');").fetchone()
         result = g.db.fetchone()
