@@ -93,7 +93,7 @@ def imdb_search():
         return "{Error: No Results}"
 
 def get_films_by(id, start, limit):
-    query = ""
+    query = "SELECT id, title, production_year AS year from title where id IN (SELECT movie_id FROM cast_info WHERE person_id IN (SELECT person_id FROM cast_info WHERE role_id=6 AND movie_id=" + str(id) + ")) AND kind_id=1;"
     cur = g.db.execute(query)
     result = g.db.fetchall()
     return json.dumps(result)
