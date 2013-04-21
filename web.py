@@ -32,6 +32,8 @@ def teardown_request(exception):
 @app.route('/')
 def index():
     if 'id' in session:
+        lastfm_username = session['lastfm_username']
+        
         return render_template('dashboard.html')
     else:
         return render_template('login.html')
@@ -80,11 +82,17 @@ def imdb_search():
 
 @app.route('/lastfm_auth/')
 def lastfm_auth():
-    return "auth string (from api)"
+    handler = LastFMHandler()
+    return redirect(handler.get_request_auth())
 
 @app.route('/lastfm_callback')
 def lastfm_callback():
-    # call lastfm method for callback stuff
+    handler = LastFMHandler()
+    info = handler.authenticate_service(request)
+    lastfm_key = info[0]
+    lastfm_username = info[1]
+    session['lastfm_key'] = lastfm_key
+    session['lastfm_username'] = lastfm_username
     return redirect(url_for('index'))
 
 @app.route('/register/', methods=['POST'])
