@@ -8,7 +8,7 @@ class LastFMHandler:
         self.API_KEY = os.environ['LASTFM_API_KEY']
         self.API_SECRET = os.environ['LASTFM_API_SECRET']
         self.API_ROOT = "http://ws.audioscrobbler.com/2.0/"
-        self.LAST_FM_AUTH = "http://www.last.fm/api/auth?api_key=d6b7875c6b075a3d0dfd03a15aacd1f0"
+        self.LAST_FM_AUTH = "http://www.last.fm/api/auth?api_key="+self.API_KEY
     
     #############
     # OUTWARD-FACING METHODS (can generally be called safely from other modules):
