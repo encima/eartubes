@@ -44,9 +44,9 @@ def index():
         else: 
             lastfm_user = None
             lastfm = False
-        return render_template('dashboard.html', lastfm_username = lastfm_user, lastfm_enabled = lastfm)
+        return render_template('dashboard.html', lastfm_username = lastfm_user, lastfm_enabled = lastfm, logged = True)
     else:
-        return render_template('login.html')
+        return render_template('login.html', logged = False)
 
 #partial search for movies from sqlite
 @app.route('/api/ps', methods=['POST'])
