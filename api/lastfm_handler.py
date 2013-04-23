@@ -82,4 +82,4 @@ class LastFMHandler:
         print "REQUEST: "+request
         response = urllib2.urlopen(request).read()
         print "RESPONSE: " +response
-        return json.dumps(response) # turn JSON into a dict (see individual methods for expected structure)
+        return json.loads(response) # turn JSON into a dict (see individual methods for expected structure)
