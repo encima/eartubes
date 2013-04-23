@@ -10,6 +10,7 @@
                     <input type="text" id="login-email" placeholder="Email" />
                     <input type="password" id="login-password" placeholder="Password" />
                     <button id="login">Login</button>
+                    <img src="/static/media/login-loading.gif" class="login-loading" />
                     <p id="login-error" class="error"></p>
                     <p>Need an account? Please <span class="link" id="show-register">click here</span>.</p>
                 </div>
@@ -19,22 +20,34 @@
                     <input type="text" id="registration-email" placeholder="Email" />
                     <input type="password" id="registration-password1" placeholder="Password" />
                     <input type="password" id="registration-password2" placeholder="Confirm password" />
+                    <img src="/static/media/login-loading.gif" class="login-loading" />
                     <button id="register">Register</button>
                     <p id="registration-error" class="error"></p>
                     
                     <p>Already have an account? Please <span class="link" id="show-login">click here</span>.</p>
                 </div>
+  <div class="clear"></div> 
         </div>
     <h1 class="indent">Welcome to eartubes</h1>
     <p class="indent">Let us get in your musics and tell you about films that we think you'll like.</p>
     <p class="indent">Make an account or login to get started.</p>
  
+    <div class="clear"></div>
 </div>
 
 {% endblock %}
 
 {% block main %}
-
+<div class="indent">
+<h1>eartubes tries to find movies you'll like from the music you love</h1>
+<img src="/static/media/logo.png" style="width:200px; float:right; margin-right:30px;" />
+<p>We take the movies that you enjoy and the music you listen to in order to guess movies you'll love.</p>
+<h2>From your own music</h2>
+<p>We use Last.fm to retrieve the music you listen to most and the songs you enjoy and try to suggest movies with soundtracks similar to this.</p>
+<p>After logging in you will be given the option to connect your Last.fm account.</p>
+<h2>From movies you enjoy</h2>
+<p>Tell us a movie you enjoy and we'll try to suggest other movies with similar soundtracks. Login to get started.</p>
+</div>
 {% endblock %}
 
 {% block scripts %}

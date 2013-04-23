@@ -16,24 +16,42 @@ header{
     background-repeat:no-repeat;
     background-position:50px 10px;
     background-size:auto 100px;
-    height:150px;    
+    height:120px;    
     position:relative;
     clear:both;
 }
 
 #beam{
-    position:absolute;
-    top:150px;
+    position;relative;
     width:100%;
-    height:350px;
     background:rgba(0,0,0,0.5);
+    padding-top:20px;
+    height:350px;
+    box-shadow:0px 0px 10px #bbb;
 }
 
 #main{
+    position:relative;
     background:rgba(250,250,250,0.5);
-    width:80%;
+    width:100%;
     margin:10px auto;
     border:none;
+}
+h1{color:#00BFFF;text-shadow:1px 1px 1px white;font-weight:lighter;}
+h2{color:#00BFFF;opacity:0.6;text-shadow:1px 1px 1px white;font-weight:lighter;}
+p{color:#aaa;font-weight:lighter;}
+
+.clear{
+    width:100%;
+    clear:both;
+}
+
+.indent{
+    margin-left:30px;
+}
+
+.error{
+    color:red;
 }
 
 /* HEADER STUFF */
@@ -42,7 +60,7 @@ header{
     margin-left:200px;
     padding-top:50px;
     font-size:30px;
-    color:#bbb;
+    color:#ccc;
     text-shadow:2px 2px 4px white;
     font-family:'Helvetica Neue', 'Helvetica';
 }
@@ -61,35 +79,36 @@ header{
 
 /* BEAM STUFF */
 #beam h1{
-    color:white;
+    color:#00BFFF;
     font-family:'Helvetica Neue', 'Helvetica';
     font-weight:lighter;
     font-size:30px;
-    margin-top:5px;;
+    margin-top:25px;;
     margin-bottom:10px;
-    text-shadow:1px 1px 1px #222;
+    text-shadow:1px 1px 1px gray;
 }
 
 #beam h2{
-    color:white;
+    color:#00BFFF;
+    opacity:0.8;
     font-family:'Helvetica Neue', 'Helvetica';
     font-weight:lighter;
     font-size:20px;
     margin-bottom:10px;
-    text-shadow:1px 1px 1px #222;
+    text-shadow:1px 1px 1px gray;
 }
 
 #beam .indent{
-    color:white;
     margin-left:30px;
     margin-right:10px;
 }
 
 #beam p{
     font-family:'Helvetica Neue', 'Helvetica';
-    text-shadow:1px 1px 1px #222;
+    text-shadow:1px 1px 1px gray;
     font-weight:lighter;
     font-size:15px;
+    color:#eee;
     margin-bottom:5px;
 }
 
@@ -132,6 +151,7 @@ header{
     border-radius:5px;
     background:white;
     font-family:'Helvetica Neue', 'Helvetica';
+    color:#aaa;
 }
 
 .account button{
@@ -156,30 +176,66 @@ header{
     color:red;
 }
 
-/* DASHBOARD STUFF */
-#beam .column{
-    width:49%;
-    float:left;
-    height:100%;
-}
-#beam .column:first-child{
-    border-right:1px solid #bbb;
+.login-loading{
+    display:none;
+    width:100%;
+    height:25px;
 }
 
+/* DASHBOARD STUFF */
+#query-column{
+    width:30%;
+    float:left;
+    background:rgba(0,0,0,0.5);
+    padding:5px;
+    border:1px solid gray;
+    box-shadow:0px 0px 10px #bbb;
+}
+
+#query-column h1{color:#00BFFF; text-shadow:1px 1px 1px #222;}
+#query-column h2{color:#00BFFF;opacity:1.0;text-shadow:none;}
+#query-column p{color:white;font-size:12px;}
+
+#results-column{
+    float:left;
+    width:60%;
+    margin-left:20px;
+}
+
+#query{
+    display:none;
+    padding-bottom:15px;
+    margin-bottom:10px;
+    border-bottom:1px solid #bbb;
+}
+#query-title{
+    color:#00BFFF;
+    font-size:18px;
+}
+#query-poster{
+    display:block;
+    width:90%;
+    margin:10px auto;
+}
+#query-poster img{
+    max-width:100%;
+    max-height:400px;
+    display:block
+    margin:0px auto;
+}
 
 #lastfm-connect{
-    display: block;
-    position:relative;
-    margin:20px auto;
-    width:150px;
+    margin-left:10px;
+    width:75px;
+    vertical-align:middle;
 }
 
 #movie_name{
-    width:80%;
-    height:40px;
+    width:90%;
+    height:38px;
     font-size:30px;
     padding:5px;   
-    background:rgba(250,250,250,0.3);
+    background:rgba(250,250,250,0.5);
     color:#222;
     border-radius:6px;
     display:block;
@@ -196,6 +252,7 @@ header{
     display:block;
     padding-top:5px;
     padding-bottom:5px;
+    padding-left:8px;
 }
 
 #movie_name_results li{
@@ -219,29 +276,68 @@ header{
     top:150px;
 }
 
-#results #query{
-    position:relative;
+#results #movie-results{
     height:100%;
-    width:300px;
-    margin-left:15px;
-    padding:10px;
-    background:rgba(0,0,0,0.02);
-    border-radius:6px;
-    box-shadow:0px 0px 5px gray;
+    position:relative;
+    float:left;
 }
 
-#results #query-poster{
+.movie{
+    background:rgba(0,0,0,0.02);
+    width:320px;
+    margin:5px;
+    padding:10px;
+    border: 1px solid #ddd;
+    float:left;
+    height:225px;
     position:relative;
-    width:300px;
-    max-height:100%;
 }
-#results #query-poster img{
+
+.movie .poster{
+    float:left;
+    width:150px;
     height:100%;
-    display: block;
-    position:relative;
-    margin:0px auto;
+    overflow:hidden;
+    margin-right:10px;
 }
+.movie .poster img{
+    width:150px;
+}
+
+.movie .info{
+    float:left;
+    width:150px;
+}
+
+.movie .info p:first-child{
+    font-size:20px;
+    font-weight:normal;
+    margin-bottom:30px;
+    color:#00BFFF;
+}
+
+.info p a:link{color:cyan; text-decoration:underline;}
+.info p a:hover{color:white; text-decoration:underline;}
+.info p a:visited{color:cyan;text-decoration:underline;}    
 
 .error{
     color:red;
+}
+
+.lastfm-button{
+    height:40px;
+    font-size:20px;
+    padding:8px;
+    padding-left:42px;
+    padding-right:10px;
+    background:url('/static/media/lastfm-button.png') rgba(0,0,0,0.3);
+    background-size:40px auto;
+    background-position:left center;
+    background-repeat:no-repeat;
+    margin:10px;
+    border-radius:7px;
+/*    border:1px solid #ccc;*/
+    border:none;
+    color:white;
+    cursor:pointer;
 }

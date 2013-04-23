@@ -1,13 +1,14 @@
 import urllib2
 import hashlib
 import json
+import os
 
 class LastFMHandler:
     def __init__(self):
-        self.API_KEY = "d6b7875c6b075a3d0dfd03a15aacd1f0"
-        self.API_SECRET = "fd09d1934d324ec4edaedee3eda32bbf"
+        self.API_KEY = os.environ['LASTFM_API_KEY']
+        self.API_SECRET = os.environ['LASTFM_API_SECRET']
         self.API_ROOT = "http://ws.audioscrobbler.com/2.0/"
-        self.LAST_FM_AUTH = "http://www.last.fm/api/auth?api_key=d6b7875c6b075a3d0dfd03a15aacd1f0"
+        self.LAST_FM_AUTH = "http://www.last.fm/api/auth?api_key="+self.API_KEY
     
     #############
     # OUTWARD-FACING METHODS (can generally be called safely from other modules):
@@ -26,14 +27,13 @@ class LastFMHandler:
         responseDict = self.api_call("auth.getSession", {'api_key':self.API_KEY, 'token':token})
         if "error" in responseDict:
             return None
+	    print type(responseDict)
         session_key = responseDict['session']['key']
         username = responseDict['session']['name']
         return(session_key, username) 
 
     # Return set of tracks recently played by the specified user
     def get_recentTracks(self, username=None, session_key=None):
-        username = "flyingsparks"
-        session_key = "926a50e7b1eab734b645d3332e7ba057"
         responseDict = self.api_call("user.getRecentTracks", {'user':username, 'api_key':self.API_KEY}) 
         return responseDict
     

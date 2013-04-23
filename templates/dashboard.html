@@ -2,38 +2,44 @@
 
 {% block beam %}
 
-<div id="beam">
-
-    <div class="column">
-        <h1 class="indent">Connect your Last.fm account</h1>
-        <p class="indent">If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
-        <p class="indent">Click the button below to redirect you to Last.fm to connect your eartub.es account to your Last.fm account.</p>
-        <a href="/lastfm_auth/"><img src="/static/media/lastfm.gif" id="lastfm-connect" /></a>
-        {{ lastfm_username }}
-    </div>
-    <div class="column">
-        <h1 class="indent">Or try searching a film you like</h1>
-        <p class="indent">Enter the name of a movie, select it from the list, and we'll try and suggest similar ones by soundtrack.</p>
-        <input type="text" placeholder="Movie name" id="movie_name" />
-
-        <ul id="movie_name_results" style="opacity:0.0;">
-        </ul>
-        <div style="clear:both;"></div>
-    </div>
-</div>
-
-    <div id="results">
-        <div id="query">
-            <p>Movies with soundtracks similar to "<strong><span id="query-title"></span>"</strong></p>
-            <div id="query-poster"></div>
-        </div>
-
-    </div>
-
-
 {% endblock %}
 
 {% block main %}
+
+<div id="query-column">
+    <div id="query">
+        <div id="query-title"></div>
+        <div id="query-poster"></div>
+    </div>
+    <div id="query-lastfm">
+    {% if lastfm_enabled == True %}
+            <h1>Welcome back, {{ lastfm_username }} <img src="/static/media/lastfm.gif" style="vertical-align:middle; height:30px;" /></h1>
+            <p>Suggest movies based on one of these categories</p>
+            <p>
+                <button class="lastfm-button" id="hearted-tracks">Your hearted tracks</button>
+                <button class="lastfm-button" id="recent-tracks">Your recently listened tracks</button>
+            </p>
+    {% endif %}
+    {% if lastfm_enabled == False %}
+            <h2>Connect your <a href="/lastfm_auth/"><img src="/static/media/lastfm.gif" id="lastfm-connect" /></a></h2>
+            <p>If you connect your Last.fm account it will give us a better idea of the kind of music you're into.</p>
+    {% endif %}
+    </div>
+    <div id="query-movie">
+        <h2>Or try searching a film you like</h2>
+        <p>Enter the name of a movie, select it from the list, and we'll try and suggest similar ones by soundtrack.</p>
+        <input type="text" placeholder="Movie name" id="movie_name" />
+        <ul id="movie_name_results" style="opacity:0.0;"></ul>
+    </div>
+</div>
+<div id="results-column">
+    <div id="welcome">
+        <h1>Welcome back</h1>
+        <h2>Start making some suggestions!</h2>
+        <p>Either use your Last.fm account or search for a movie to get started.</p>
+    </div>
+    <div id="movie-results"></div>
+</div>
 
 {% endblock %}
 
@@ -41,44 +47,116 @@
 <script type="text/javascript">
 var requesting = false;
 
+function showQuery(queryTitle){
+     $("#query-title").html(queryTitle);
+    $("#query-poster").html('<img src="/static/media/login-loading.gif" style="width:100%;height:40px;"/>');
+    var winHeight = $(window).height();
+    $("#movie_name_results").css({'display':'none'});
+    $("#query").slideDown(400);
+    loadListeners();
+}
+
+function updateQueryWithImage(image){
+    $("#query-poster").html(image);
+}
+
 function loadListeners(){
     $("#movie_name_results li").click(function(event){
+        
         event.stopImmediatePropagation();
         var movieName = $(this).attr("rel");
-        $("#movie_name").val(movieName)
+        var movieID = $(this).attr("id");
+        var movieYear = $(this).attr("class");
+         $("#movie_name").val(movieName)
          $("#movie_name_results").html('');
          $("#movie_name_results").stop().animate({opacity: '0.0'}, 400);
-         var winHeight = $(window).height();
-         var topHeight = winHeight-200; // - height of beam - padding of beam   
-         $("#beam").stop().animate({top:topHeight+'px', height:'200px'},600, 'easeOutQuint');
-        getMovieInfo(movieName);
+        showQuery("Movies with soundtracks similar to <strong>"+movieName+"</strong>");
+        getMovieInfo(movieID, movieYear);
+    });
+    $("#hearted-tracks").click(function(event){
+        event.stopImmediatePropagation();
+        showQuery("Movies with soundtracks based off your Last.fm <strong>hearted tracks</strong>");
+        getLastfmHearted();
+    });
+    $("#recent-tracks").click(function(event){
+        event.stopImmediatePropagation();
+        showQuery("Movies with soundtracks based off your Last.fm <strong>recent tracks</strong>");
+        getLastfmRecent();
+    });
+    $(".lastfm-button").mouseenter(function(){
+        $(this).css({'background-image':'url("/static/media/lastfm-button-red.png")','background-color': 'rgba(0,0,0,0.05)'});
+    });
+    $(".lastfm-button").mouseleave(function(){
+        $(this).css({'background-image':'url("/static/media/lastfm-button.png")', 'background-color':' rgba(0,0,0,0.3)'});
     });
 }
 
-function getMovieInfo(name){
+function getLastfmHearted(){
+
+}
+
+function getLastfmRecent(){
+
+}
+
+function getMovieInfo(id, year){   
+    $("#movie-results").slideUp(300, function(){
+        $("#movie-results").html('');
+    });
     $.ajax({
         type : 'POST',
         url : '/api/imdb',
         dataType : 'json',
         data : {
-            q: name
+            q: id
         },
         success : function(data){
+            $("#movie-results").html('');
             console.log(data);
-            $("#query-title").html(data[0]['title']);
-            if(data[0]['poster'] != null){
-                $("#query-poster").html('<img src="'+data[0]['poster']+'" />');
+            if(data.length > 1){
+                $("#welcome").slideUp(600);
+            for(var i = 0; i < data[1].length; i++){
+                console.log(data[1][i]['title']+": "+data[1][i]['poster']);
+                stuff = '<div class="movie"><div class="poster">';
+                if(data[1][i]['poster'] != null){
+                    stuff = stuff + '<img src="'+data[1][i]['poster']+'" />';
+                }
+                else{stuff = stuff + '<img src="/static/media/movie_default.gif" style="opacity:0.6; width:170px;" />';}
+                stuff = stuff + '</div><div class="info"><p>';
+                stuff = stuff + data[1][i]['title']+'</p><p>';
+                stuff = stuff + data[1][i]['year']+'</p></p>';
+/*                stuff = stuff + '<p><strong><a href="'+data[i]['imdb_url']+'" target="_blank">IMDB Page</a></p>';
+                stuff = stuff + '<p><strong>Starring:</strong><br /><i>';
+                for(var y = 0; y < data[i][0]['actors'].length; y++){
+                    stuff = stuff + data[i][0]['actors'][y]+', ';
+                    if(y == 4){y = data[i][0]['actors'].length;}
+                }*/
+                stuff = stuff + '</i></p></div><div class="clear"></div></div>';
+                $("#movie-results").append(stuff);
+                loadListeners();
             }
-            else{$("#query-poster").html('<p class="error">Sorry, we couldn\'t find an image for this movie.</p>');}
-            $("#results").fadeIn(500);
-            var spaceLeft = $(window).height() - $("header").height() - $("#beam").height()-80;
-            $("#results").animate({height: spaceLeft+'px'},300, function(){
-                var spaceForImage = $("#query").height() - $("#query-title").height()-50;
-                $("#query-poster img").animate({height:spaceForImage+"px"}, 300);
+            $("#movie-results").slideDown(300);
+            }
+            $("#query-poster").slideUp(200, function(){
+                posterHTML = "";
+                if(data[0][0]['poster'] != null){
+                    posterHTML = posterHTML + '<img src="'+data[0][0]['poster']+'" />'
+                }
+            
+                else{posterHTML = '<p class="error">Sorry, we couldn\'t find an image for this movie.</p>';}
+            
+                if(data.length < 2){
+                    posterHTML = posterHTML + '<p class="error">Sorry, we couldn\'t find any movies similar to this one by soundtrack</p>';
+                }
+                updateQueryWithImage(posterHTML);
+                $("#query-poster").slideDown(300);
             });
+
+            loadListeners();
         },
         error : function(XMLHttpRequest, textStatus, errorThrown){
             console.log("error: "+textStatus);
+            updateQueryWithImage( '<p class="error">Sorry, we couldn\'t get any details on this movie</p>');
         }
     });
 }
@@ -101,10 +179,11 @@ function getMoviesByName(name){
                 requesting = false;
                 return;
             }
+            $("#movie_name_results").css({'display':'block'});
             $("#movie_name_results").stop().animate({opacity: '1.0'},400);
             for(var i = 0; i < data.length; i++){
                 var item = "";
-                item = '<li rel="'+data[i]['title']+'">'+data[i]['title']
+                item = '<li id="'+data[i]['id']+'" rel="'+data[i]['title']+'">'+data[i]['title']
                 if(data[i]['year'] != "-1"){
                     item = item + ' ('+data[i]['year']+')'
                 }
@@ -112,8 +191,6 @@ function getMoviesByName(name){
                 $("#movie_name_results").append(item);
                 if(i > 200){i = data.length;}
                 loadListeners();
-                var reqHeight = $("#movie_name_results").height() + 200;
-                $("#beam").stop().animate({height: reqHeight+"px"}, 300);
             }
             requesting = false;
         },
@@ -128,16 +205,16 @@ function getMoviesByName(name){
 $("#movie_name").keyup(function(event){
     event.stopImmediatePropagation();
     var request = $("#movie_name").val();
+    if(request.length == 0){
+        $("#movie_name").val('');
+        $("#movie_name_results").stop().animate({opacity:'0.0'},300);
+    }
     if(request.length > 2 && requesting == false){
-        if($("#beam").height() < 300){
-            $("#beam").stop().animate({top:'150px', height:'350px'},600, 'easeOutQuint');
-        }
-        else{
-            $("#beam").stop().animate({top:'150px'},600, 'easeOutQuint');
-        }
-        $("#results").stop().fadeOut(400);
         getMoviesByName(request);
     }
+});
+$(document).ready(function(){
+    loadListeners();
 });
 </script>
 {% endblock %}
